@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{88E8C459-98E8-4701-A12B-E2FAF36D605C}</ProjectGuid>
+    <ProjectGuid>{4EDA9387-887E-453C-828B-A7567238A97F}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BasicGateApp.UWP</RootNamespace>

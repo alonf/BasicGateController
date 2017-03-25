@@ -5,6 +5,7 @@
              x:Class="BasicGateApp.MainPage">
     <StackLayout>
         <Button Text="Activate"
+            FontSize="100"
             HorizontalOptions="Center"
             VerticalOptions="CenterAndExpand"
             Clicked="OnActivate"/>
