@@ -16,5 +16,19 @@ namespace BasicGateApp
 		{
 			InitializeComponent();
 		}
+
+	    public async void OnActivate(object sender, EventArgs args)
+	    {
+	        try
+	        {
+                string iotHubConnectionString = "[paste IoT hub device connection string here]";
+                var client = DeviceClient.CreateFromConnectionString(iotHubConnectionString);
+                await client.SendEventAsync(new Message(Encoding.ASCII.GetBytes("Activate")));
+            }
+	        catch (Exception e)
+	        {
+                await DisplayAlert("Exception", e.Message, "OK");
+            }
+	    }
 	}
 }
