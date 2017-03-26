@@ -41,10 +41,31 @@ namespace BasicGateApp
             }
         }
 
-	    private async void OnActivate(object sender, EventArgs e)
+	    private async void OnActivateFunPropellor(object sender, EventArgs e)
 	    {
 	        var result = await SendCloudToDeviceCommandAsync("SimpleRelay", "Activate");
-	        await DisplayAlert("HTTP Get result", result, "OK");
+	        await DisplayAlert("Fun Propellor HTTP Get result", result, "OK");
 	    }
+
+	    private  async Task OnActivateMiniatureGateAsync(string command)
+	    {
+            var result = await SendCloudToDeviceCommandAsync("MiniatureGate", command);
+            await DisplayAlert("Miniature Gate HTTP Get result", result, "OK");
+        }
+
+	    private async void OnStopMiniatureGate(object sender, EventArgs e)
+	    {
+	        await OnActivateMiniatureGateAsync("Stop");
+	    }
+
+	    private async void OnOpenMiniatureGate(object sender, EventArgs e)
+	    {
+            await OnActivateMiniatureGateAsync("Open");
+        }
+
+	    private async void OnCloseMiniatureGate(object sender, EventArgs e)
+	    {
+            await OnActivateMiniatureGateAsync("Close");
+        }
 	}
 }

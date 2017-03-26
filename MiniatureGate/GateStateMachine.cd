@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GateManager">
+    <Position X="4.5" Y="0.5" Width="5.5" />
+    <Compartments>
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="GateManager::GateMovementState">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementStandstillInTheMiddleState&lt;currentState&gt;">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementOpenedClosedState&lt;currentState&gt;">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementStopping">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementOpennignOrClosing&lt;Direction, CurrentState, EndState&gt;">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Typedef Name="GateManager::GateMovementStatePtr_t" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AEAAAEAMJAAADAAEAAAACBIQAAAAAAAAAAAABABAAAA=</HashCode>
+      <FileName>GateManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

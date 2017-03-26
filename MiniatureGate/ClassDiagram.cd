@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="AzureIoTHubManager">
+    <Position X="5.25" Y="3.25" Width="3.25" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>IAAAAAAMAAAEAAAAADCACAAAIDERQACAAAAACAEAAAA=</HashCode>
+      <FileName>AzureIoTHubManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Logger">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAIAAAACEQAAABIQAAAgAgAAAAAAAAAAAAA=</HashCode>
+      <FileName>Logger.h</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="_ledsLogger" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PushButtonManager">
+    <Position X="13.25" Y="3.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AEAAEAAIAAAAAAAgAAAAAAAAAAAAAAAAAAAVAAAAASA=</HashCode>
+      <FileName>PushButtonManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebServer">
+    <Position X="8.75" Y="3.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>QAgCAgEcACAAAEBAwAAAgIACiAkDgACAAQEAgAgAABQ=</HashCode>
+      <FileName>WebServer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WiFiManager">
+    <Position X="15.75" Y="3.25" Width="2" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>EAAAAAAMAAgAAABAAAAACABAAAAIAAAAAAQACKgAAAA=</HashCode>
+      <FileName>WiFiManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GateManager">
+    <Position X="11" Y="3.25" Width="2" />
+    <NestedTypes>
+      <Class Name="GateManager::GateMovementState" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementStandstillInTheMiddleState&lt;currentState&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementOpenedClosedState&lt;currentState&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementStopping" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Class Name="GateManager::GateMovementOpennignOrClosing&lt;Direction, CurrentState, EndState&gt;" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+      <Typedef Name="GateManager::GateMovementStatePtr_t" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>GateManager.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <InheritanceLine Type="Singleton&lt;T&gt;">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.059" Y="0.111" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <InheritanceLine Type="IProcessor">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.058" Y="0.108" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AEAAAEAMJAAADAAEAAAACBIQAAAAAAAAAAAABABAAAA=</HashCode>
+      <FileName>GateManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IProcessor">
+    <Position X="9" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ArduinoLoopManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Singleton&lt;T&gt;" Collapsed="true">
+    <Position X="7.25" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAACAABAAAAAAAEEAQAAgAAAAAAA=</HashCode>
+      <FileName>Singleton.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="LedsLogger">
+    <Position X="0.5" Y="3.25" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Nested Types" Collapsed="false" />
+    </Compartments>
+    <NestedTypes>
+      <Class Name="LedsLogger::Led">
+        <Compartments>
+          <Compartment Name="Fields" Collapsed="true" />
+        </Compartments>
+        <TypeIdentifier>
+          <NewMemberFileName>LedsLogger.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Class>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>BQAAAAAIAgBAAQAAAAAAAAAAAAAAAQAAAABAAAAAACA=</HashCode>
+      <FileName>LedsLogger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Typedef Name="LedsLoggerPtr_t" Collapsed="true">
+    <Position X="0.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>LedsLogger.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
+  <Font Name="Segoe UI" Size="10" />
+</ClassDiagram>

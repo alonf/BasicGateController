@@ -4,10 +4,27 @@
              xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Core"
              x:Class="BasicGateApp.MainPage">
     <StackLayout>
-        <Button Text="Activate"
-            FontSize="100"
+        <Button Text="Activate Fun Propellor"
+            FontSize="36"
             HorizontalOptions="Center"
             VerticalOptions="CenterAndExpand"
-            Clicked="OnActivate"/>
+            Clicked="OnActivateFunPropellor"/>
+        <StackLayout Orientation="Horizontal">
+        <Button Text="Open Miniature Gate"
+            FontSize="36"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand"
+            Clicked="OnOpenMiniatureGate"/>
+            <Button Text="Close Miniature Gate"
+            FontSize="36"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand"
+            Clicked="OnCloseMiniatureGate"/>
+            <Button Text="Stop Miniature Gate"
+            FontSize="36"
+            HorizontalOptions="Center"
+            VerticalOptions="CenterAndExpand"
+            Clicked="OnStopMiniatureGate"/>
+        </StackLayout>
     </StackLayout>
 </forms:ContentPage>
