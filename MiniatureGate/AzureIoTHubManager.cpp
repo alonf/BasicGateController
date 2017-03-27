@@ -6,7 +6,7 @@ using namespace std;
 WiFiClientSecure AzureIoTHubManager::_sslWiFiClient;
 AzureIoTHubClient AzureIoTHubManager::_iotHubClient;
 
-AzureIoTHubManager::AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, const char* connectionString) :  _logger(logger), _azureIoTHubDeviceConnectionString(connectionString)
+AzureIoTHubManager::AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, std::function<bool()> shouldSkipPolling, const char* connectionString) :  _logger(logger), _shouldSkipPolling(shouldSkipPolling), _azureIoTHubDeviceConnectionString(connectionString)
 {
 	wifiManager->RegisterClient([this](ConnectionStatus status) { UpdateStatus(status); });
 }
@@ -82,8 +82,10 @@ void AzureIoTHubManager::Loop()
 	if (CheckIoTHubClientInitiated() == false)
 		return;
 
+	if (_shouldSkipPolling && _shouldSkipPolling()) //skip polling AzureIoTHub
+		return;
 
-	if ((millis() - _loopStartTime) < 500)
+	if ((millis() - _loopStartTime) < 3000)
 		return;
 	_loopStartTime = millis();
 	AzureIoTHubLoop();

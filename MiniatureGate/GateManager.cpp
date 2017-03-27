@@ -52,9 +52,16 @@ void GateManager::ChangeState(shared_ptr<GateMovementState> state)
 
 GateState GateManager::ReadState()
 {
-	
 	int limitSwitchesValue = analogRead(limitSwitches);
-	Serial.println(limitSwitchesValue);
+
+	//limit switch log information
+	static int oldLimitSwitchValue;
+	if (abs(limitSwitchesValue - oldLimitSwitchValue) > 10)
+		Serial.println(limitSwitchesValue);
+	oldLimitSwitchValue = limitSwitchesValue;
+	//end log
+
+
 	//Use the A0 analog input to read resistor values. the closed limit switch has a 1/2 resistor ratio, the open limit switch as 2/3 ratio. Together they have 3/4
 	bool limitSwitchGateClosedValue = (450 < limitSwitchesValue && limitSwitchesValue < 520) || limitSwitchesValue > 570; 
 	bool limitSwitchGateOpenedValue = (300 < limitSwitchesValue && limitSwitchesValue < 370) || limitSwitchesValue > 570;

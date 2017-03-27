@@ -27,13 +27,14 @@ private:
 	PubSub<AzureIoTHubManager, const String&, int> _pubsub;
 	bool _relayState = false;
 	LoggerPtr_t _logger;
+	std::function<bool()> _shouldSkipPolling;
 	bool _IsInitTime = false;
 	int _loopStartTime = millis();
 	const char* _azureIoTHubDeviceConnectionString;
 	void UpdateStatus(ConnectionStatus status);
 	bool CheckTimeInitiated();
 	bool CheckIoTHubClientInitiated();
-	AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, const char* connectionString);
+	AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, std::function<bool ()> shouldSkipPolling, const char* connectionString);
 public:
 	void Register(WebNotificationPtr_t subscriber) { _pubsub.Register(subscriber); }
 	void Loop() override;

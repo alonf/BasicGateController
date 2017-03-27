@@ -52,11 +52,15 @@ void SubscribeRemoteCommands(std::shared_ptr<T> server)
 
 
 AzureIoTHubManagerPtr_t azureIoTHubManager;
+bool ShouldSkipPolling()
+{
+	return gateManager->Status() == "Opening" || gateManager->Status() == "Closing";
+}
 
 void SetupAzureIoTHubManager()
 {
 	char *connectionString = strdup(configurationManger->GetAzureIoTConnectionString().c_str()); //use only once, so not really a memory leak
-	azureIoTHubManager = AzureIoTHubManager::Create(wifiManager, logger, connectionString);
+	azureIoTHubManager = AzureIoTHubManager::Create(wifiManager, logger, ShouldSkipPolling, connectionString);
 	SubscribeRemoteCommands(azureIoTHubManager);
 }
 

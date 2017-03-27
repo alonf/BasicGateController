@@ -31,7 +31,7 @@ const int limitSwitches = A0; //A0 pull down with 10K resistor
 const int flashingLED = 0; //D3 
 const int flashingLedPeriod = 500; //0.5 second
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
-const int stepperSpeed = 100; // 0 > speed < 1024
+const int stepperSpeed = 40; // 0 > speed < 1024
 const int OpeningDirection = -1; //set the initial motor direction (-1 or 1)
 const int ButtonPressed = LOW;
 const int ButtonReleased = ButtonPressed == HIGH ? LOW : HIGH;

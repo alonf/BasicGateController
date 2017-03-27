@@ -14,30 +14,6 @@ void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCal
 	LogInfo("Result Call Back Called! Result is: %s \r\n", ENUM_TO_STRING(IOTHUB_CLIENT_CONFIRMATION_RESULT, result));
 }
 
-//static void sendMessage(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, const unsigned char* buffer, size_t size)
-//{
-//	static unsigned int messageTrackingId;
-//	IOTHUB_MESSAGE_HANDLE messageHandle = IoTHubMessage_CreateFromByteArray(buffer, size);
-//	if (messageHandle == nullptr)
-//	{
-//		LogInfo("unable to create a new IoTHubMessage\r\n");
-//	}
-//	else
-//	{
-//		if (IoTHubClient_LL_SendEventAsync(iotHubClientHandle, messageHandle, sendCallback,
-//			reinterpret_cast<void*>(static_cast<uintptr_t>(messageTrackingId))) != IOTHUB_CLIENT_OK)
-//		{
-//			LogInfo("failed to hand over the message to IoTHubClient");
-//		}
-//		else
-//		{
-//			LogInfo("IoTHubClient accepted the message for delivery\r\n");
-//		}
-//		IoTHubMessage_Destroy(messageHandle);
-//	}
-//	free(const_cast<unsigned char*>(buffer));
-//	messageTrackingId++;
-//}
 
 static IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubMessage(IOTHUB_MESSAGE_HANDLE message, void* userContextCallback)
 {
@@ -81,7 +57,7 @@ extern "C" bool AzureIoTHubInit(const char *connectionString)
 	}
 
 
-	unsigned int minimumPollingTime = 3; /*because it can poll "after 9 seconds" polls will happen effectively at 4 seconds*/
+	unsigned int minimumPollingTime = 9; /*because it can poll "after 9 seconds" polls will happen effectively at 4 seconds*/
 	if (IoTHubClient_LL_SetOption(iotHubClientHandle, "MinimumPollingTime", &minimumPollingTime) != IOTHUB_CLIENT_OK)
 	{
 		LogInfo("failure to set option \"MinimumPollingTime\"\r\n");
@@ -134,3 +110,29 @@ extern "C" void AzureIoTHubLoop(void)
 	Serial.write(".");
 	IoTHubClient_LL_DoWork(iotHubClientHandle);
 }
+
+
+//static void sendMessage(IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle, const unsigned char* buffer, size_t size)
+//{
+//	static unsigned int messageTrackingId;
+//	IOTHUB_MESSAGE_HANDLE messageHandle = IoTHubMessage_CreateFromByteArray(buffer, size);
+//	if (messageHandle == nullptr)
+//	{
+//		LogInfo("unable to create a new IoTHubMessage\r\n");
+//	}
+//	else
+//	{
+//		if (IoTHubClient_LL_SendEventAsync(iotHubClientHandle, messageHandle, sendCallback,
+//			reinterpret_cast<void*>(static_cast<uintptr_t>(messageTrackingId))) != IOTHUB_CLIENT_OK)
+//		{
+//			LogInfo("failed to hand over the message to IoTHubClient");
+//		}
+//		else
+//		{
+//			LogInfo("IoTHubClient accepted the message for delivery\r\n");
+//		}
+//		IoTHubMessage_Destroy(messageHandle);
+//	}
+//	free(const_cast<unsigned char*>(buffer));
+//	messageTrackingId++;
+//}
