@@ -4,27 +4,31 @@
              xmlns:forms="clr-namespace:Xamarin.Forms;assembly=Xamarin.Forms.Core"
              x:Class="BasicGateApp.MainPage">
     <StackLayout>
-        <Button Text="Activate Fun Propellor"
-            FontSize="36"
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand"
-            Clicked="OnActivateFunPropellor"/>
-        <StackLayout Orientation="Horizontal">
-        <Button Text="Open Miniature Gate"
-            FontSize="36"
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand"
-            Clicked="OnOpenMiniatureGate"/>
-            <Button Text="Close Miniature Gate"
-            FontSize="36"
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand"
-            Clicked="OnCloseMiniatureGate"/>
-            <Button Text="Stop Miniature Gate"
-            FontSize="36"
-            HorizontalOptions="Center"
-            VerticalOptions="CenterAndExpand"
-            Clicked="OnStopMiniatureGate"/>
-        </StackLayout>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <Button Text="Activate Fun Propellor"
+                FontSize="36"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                Clicked="OnActivateFunPropellor"/>
+        </Frame>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <StackLayout Orientation="Vertical">
+            <Button Text="Open Miniature Gate"
+                FontSize="36"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                Clicked="OnOpenMiniatureGate"/>
+                <Button Text="Close Miniature Gate"
+                FontSize="36"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                Clicked="OnCloseMiniatureGate"/>
+                <Button Text="Stop Miniature Gate"
+                FontSize="36"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                Clicked="OnStopMiniatureGate"/>
+            </StackLayout>
+        </Frame>
     </StackLayout>
 </forms:ContentPage>
