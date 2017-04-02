@@ -20,7 +20,8 @@
 #include <sys/time.h>
 #include "IoTHub.h"
 
-static char ssid[] = "Lumia 950 XL Alon";     // your network SSID (name)
+//static char ssid[] = "Lumia 950 XL Alon";     // your network SSID (name)
+static char ssid[] = "DellXPSAlon";     // your network SSID (name)
 static char pass[] = "AF123456";    // your network password (use for WPA, or use as key for WEP)
 
 static WiFiClientSecure sslClient; // for ESP8266

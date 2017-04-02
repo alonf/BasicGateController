@@ -41,9 +41,9 @@ namespace BasicGateApp
             }
         }
 
-	    private async void OnActivateFunPropellor(object sender, EventArgs e)
+	    private async void OnToggleBlueLed(object sender, EventArgs e)
 	    {
-	        var result = await SendCloudToDeviceCommandAsync("SimpleRelay", "Activate");
+	        var result = await SendCloudToDeviceCommandAsync("SimpleRelay", "Toggle");
 	        await DisplayAlert("Fun Propellor HTTP Get result", result, "OK");
 	    }
 

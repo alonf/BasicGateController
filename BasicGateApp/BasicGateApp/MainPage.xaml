@@ -5,26 +5,26 @@
              x:Class="BasicGateApp.MainPage">
     <StackLayout>
         <Frame HasShadow="True" OutlineColor="Black">
-            <Button Text="Activate Fun Propellor"
-                FontSize="36"
+            <Button Text="Toggle Blue LED"
+                FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
-                Clicked="OnActivateFunPropellor"/>
+                Clicked="OnToggleBlueLed"/>
         </Frame>
         <Frame HasShadow="True" OutlineColor="Black">
             <StackLayout Orientation="Vertical">
-            <Button Text="Open Miniature Gate"
-                FontSize="36"
+            <Button Text="Open Gate"
+                FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
                 Clicked="OnOpenMiniatureGate"/>
-                <Button Text="Close Miniature Gate"
-                FontSize="36"
+                <Button Text="Close Gate"
+                FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
                 Clicked="OnCloseMiniatureGate"/>
-                <Button Text="Stop Miniature Gate"
-                FontSize="36"
+                <Button Text="Stop Gate"
+                FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
                 Clicked="OnStopMiniatureGate"/>

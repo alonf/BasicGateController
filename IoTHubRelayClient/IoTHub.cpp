@@ -62,9 +62,10 @@ static IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubMessage(IOTHUB_MESSAGE_HANDLE mess
 	printf("Recived command, size:%d text:", size);
 	for (int i = 0; i < size; ++i)
 		putchar(buffer[i]);
+	putchar('\n');
 
 	/*buffer is not zero terminated*/
-	if (strncmp("Activate", reinterpret_cast<const char *>(buffer), size) == 0)
+	if (strncmp("Toggle", reinterpret_cast<const char *>(buffer), size) == 0)
 	{
 		g_relayState = g_relayState == LOW ? HIGH : LOW; //Toggle Relay State
 		printf("Setting the relay state to: %s\r\n", g_relayState == HIGH ? "On" : "Off");
