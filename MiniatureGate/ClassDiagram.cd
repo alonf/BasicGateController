@@ -6,7 +6,7 @@
       <Compartment Name="Fields" Collapsed="true" />
     </Compartments>
     <TypeIdentifier>
-      <HashCode>IAAAAAAMAAAEAAAAADCACAAAIDERQACAAAAACAEAAAA=</HashCode>
+      <HashCode>IAAAAAAMAAAEAAAAADCACAAAIDERQACAAAAACQEAAAA=</HashCode>
       <FileName>AzureIoTHubManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -103,14 +103,15 @@
     <Position X="9" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAIAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>ArduinoLoopManager.h</FileName>
+      <FileName>C:\Users\alon\Documents\Visual Studio 2017\Projects\BasicGateController\MinatureGateUtil\ArduinoLoopManager.h</FileName>
+      <NewMemberFileName>ArduinoLoopManager.h</NewMemberFileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Singleton&lt;T&gt;" Collapsed="true">
     <Position X="7.25" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAEAAAAAAAAAAAAAACAABAAAAAAAEEAQAAgAAAAAAA=</HashCode>
-      <FileName>Singleton.h</FileName>
+      <FileName>C:\Users\alon\Documents\Visual Studio 2017\Projects\BasicGateController\MinatureGateUtil\Singleton.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="LedsLogger">

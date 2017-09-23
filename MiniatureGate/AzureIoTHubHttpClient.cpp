@@ -3,7 +3,7 @@
 #include <Arduino.h>
 #include "AzureIoTHub.h"
 #include "AzureIoTHubManager.h"
-
+#include "azure_c_shared_utility\platform.h"
 
 void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCallback)
 {
@@ -46,7 +46,11 @@ IOTHUB_CLIENT_LL_HANDLE iotHubClientHandle;
 extern "C" bool AzureIoTHubInit(const char *connectionString)
 {
 	Serial.printf("Connection string: %s\n", connectionString);
-	
+	if (platform_init() != 0)
+	{
+		printf("Failed to initialize the platform.\r\n");
+		return false;
+	}
 	iotHubClientHandle = IoTHubClient_LL_CreateFromConnectionString(connectionString, HTTP_Protocol);
 	srand(static_cast<unsigned int>(time(nullptr)));
 

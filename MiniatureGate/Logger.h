@@ -18,7 +18,7 @@ private:
 	Logger(int redLedPin, int greenLedPin, int baudRate);
 public:
 	void Loop() override { _ledsLogger->Loop(); }
-	void OnCommand(const String &commandName, int commandId) const;
+	void OnCommand(const String &commandName) const;
 	void WriteErrorMessage(const String &message, int blinks) const;
 	void OnWiFiStatusChanged(const ConnectionStatus& status) const;
 	void OnLongButtonPressDetection() const;

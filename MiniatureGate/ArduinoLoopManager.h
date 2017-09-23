@@ -2,11 +2,12 @@
 
 #ifndef _ARDUINOLOOPMANAGER_h
 #define _ARDUINOLOOPMANAGER_h
-#include <functional>
-#include <initializer_list>
-#include <memory>
+#include <Arduino.h>
+
 #include "Singleton.h"
+#include <memory>
 #include<vector>
+#include <initializer_list>
 
 class IProcessor
 {

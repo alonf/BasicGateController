@@ -1,4 +1,6 @@
-
+#include <AzureIoTHub.h>
+#include <Arduino.h>
+#include <Wire.h>
 #include <Stepper.h>
 #include <ESP8266mDNS.h>
 #include <ESP8266WebServer.h>
@@ -9,13 +11,10 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <WiFiUdp.h>
-#include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
-#include <AzureIoTHubClient.h>
 #include <dummy.h>
 #include <EEPROM.h>
-#include <Arduino.h>
 #include "ConfigurationManager.h"
 #include "ArduinoLoopManager.h"
 #include "PubSub.h"
@@ -46,32 +45,27 @@ ConfigurationManager_t configurationManger;
 template<typename T>
 void SubscribeRemoteCommands(std::shared_ptr<T> server)
 {
-	server->Register([](const String &commandName, int id) {logger->OnCommand(commandName, id); });
-	server->Register([](const String &commandName, int id) {gateManager->OnCommand(commandName, id); });
+	server->Register([](const String &commandName) {logger->OnCommand(commandName); });
+	server->Register([](const String &commandName) {gateManager->OnCommand(commandName); });
 }
 
 
 AzureIoTHubManagerPtr_t azureIoTHubManager;
-bool ShouldSkipPolling()
-{
-	return gateManager->Status() == "Opening" || gateManager->Status() == "Closing";
-}
+
 
 void SetupAzureIoTHubManager()
 {
 	char *connectionString = strdup(configurationManger->GetAzureIoTConnectionString().c_str()); //use only once, so not really a memory leak
-	azureIoTHubManager = AzureIoTHubManager::Create(wifiManager, logger, ShouldSkipPolling, connectionString);
+	azureIoTHubManager = AzureIoTHubManager::Create(wifiManager, logger, connectionString);
 	SubscribeRemoteCommands(azureIoTHubManager);
 }
 
 class WebCommand : public IWebCommand, public enable_shared_from_this<WebCommand>
 {
 private:
-	static int s_id;
 	const String _menuEnrty;
 	const String _commandName;
 	const String _resultHtml;
-	const int _id = ++s_id;
 	weak_ptr<WebServer> _webServer;
 
 public:
@@ -103,14 +97,8 @@ public:
 	{
 		return _commandName;
 	}
-
-	int Id() const override
-	{
-		return _id;
-	}
 };
 
-int WebCommand::s_id = 0;
 WebServerPtr_t webServer;
 
 String gateStatus;
@@ -215,7 +203,7 @@ void setup()
 		logger->WriteMessage(gateStatus);
 		if (configurationManger->ShouldUseAzureIoTHub())
 		{
-			azureIoTHubManager->UpdateGateStatus(deviceId, gateStatus);
+			azureIoTHubManager->UpdateGateStatus(deviceId, gateStatus); //TODO: change to the ConfigurationManager DeviceId
 		}
 		::gateStatus = gateStatus;
 	});

@@ -20,7 +20,6 @@ class IWebCommand
 {
 public:
 	virtual const String& Name() const = 0;
-	virtual int Id() const = 0;
 	virtual const String& MenuEntry() const = 0; 
 	virtual const String& ResultHTML() const = 0;
 	virtual const String& TriggerUrl() const = 0;
@@ -49,7 +48,7 @@ struct DeviceSettings
 };
 
 typedef std::shared_ptr<IWebCommand> WebCommandPtr_t;
-typedef std::function<void(const String&, int)> WebNotificationPtr_t;
+typedef std::function<void(const String&)> WebNotificationPtr_t;
 class WebServer : public Singleton<WebServer>, public IProcessor
 {
 	friend class Singleton<WebServer>;
@@ -57,7 +56,7 @@ private:
 	char _setupHtmlBuffer[3300]; //for setup html result
 	std::unique_ptr<DeviceSettings> _deviceSettings;
 	ESP8266WebServer _server;
-	PubSub<WebServer, const String&, int> _pubsub;
+	PubSub<WebServer, const String&> _pubsub;
 	String _header;
 	const String _authorizedUrl;
 	std::vector<WebCommandPtr_t> _webCommands;

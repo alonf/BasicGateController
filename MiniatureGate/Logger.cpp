@@ -7,10 +7,10 @@ Logger::Logger(int redLedPin, int greenLedPin, int baudRate /*= 115200*/): _leds
 	Serial.setDebugOutput(true);
 }
 
-void Logger::OnCommand(const String &commandName, int commandId) const
+void Logger::OnCommand(const String &commandName) const
 {
 	Serial.println(commandName + " command recieved");
-	_ledsLogger->BlinkGreen(commandId, 250);
+	_ledsLogger->BlinkGreen(5, 250);
 }
 
 void Logger::WriteErrorMessage(const String& message, int blinks) const
