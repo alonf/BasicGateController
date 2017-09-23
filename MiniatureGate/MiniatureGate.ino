@@ -51,13 +51,28 @@ void SubscribeRemoteCommands(std::shared_ptr<T> server)
 
 
 AzureIoTHubManagerPtr_t azureIoTHubManager;
+static bool g_shouldReset = false;
 
+//handle a command from the cloud that switch to local web server mode
+void OnCommand(const String &commandName)
+{
+	String command = commandName;
+	command.toLowerCase();
+	if (command == "web")
+	{
+		configurationManger->SetWebServerMode();
+		configurationManger->FlashEEProm();
+		g_shouldReset = true; //must finish handling cloud command before reset.
+
+	}
+}
 
 void SetupAzureIoTHubManager()
 {
 	char *connectionString = strdup(configurationManger->GetAzureIoTConnectionString().c_str()); //use only once, so not really a memory leak
 	azureIoTHubManager = AzureIoTHubManager::Create(wifiManager, logger, connectionString);
 	SubscribeRemoteCommands(azureIoTHubManager);
+	azureIoTHubManager->Register([](const String &commandName) {OnCommand(commandName); });
 }
 
 class WebCommand : public IWebCommand, public enable_shared_from_this<WebCommand>
@@ -226,7 +241,11 @@ void setup()
 
 void loop()
 {
+	if (g_shouldReset)
+		Reset();
+
 	loopManager->Loop();
+	
 }
 
 void OnButtonPressed()

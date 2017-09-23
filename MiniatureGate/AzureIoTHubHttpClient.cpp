@@ -111,7 +111,9 @@ extern "C" bool AzureIoTHubSendMessage(char *deviceId, const char *status)
 
 extern "C" void AzureIoTHubLoop(void)
 {
-	Serial.write(".");
+	static unsigned int t = 0;
+	if (++t % 100000 == 0)
+		Serial.write(".");
 	IoTHubClient_LL_DoWork(iotHubClientHandle);
 }
 

@@ -18,9 +18,9 @@ void AzureIoTHubManager::HandleCommand(const String & commandName) const
 	_logger->WriteMessage("Received command: ");
 	_logger->WriteMessage(command);
 	
-	if (command != "open" && command != "close" && command != "stop")
+	if (command != "open" && command != "close" && command != "stop" && command != "web")
 	{
-		_logger->WriteMessage("Invalid command, should be one of: open, close, stop");
+		_logger->WriteMessage("Invalid command, should be one of: open, close, stop or web");
 		return;
 	}
 

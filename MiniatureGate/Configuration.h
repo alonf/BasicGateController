@@ -24,8 +24,8 @@ const int greenLed = D7;
 const int ButtonPressed = LOW;
 const int ButtonReleased = ButtonPressed == HIGH ? LOW : HIGH;
 const int I2CAddress = 8;
-const int OpenCommand = D1;
-const int CloseCommand = D2;
+const int OpenCommand = D2;
+const int CloseCommand = D1;
 const int StopCommand = D5;
 const int ButtonPressedCommand = D0;
 #endif
