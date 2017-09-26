@@ -8,7 +8,11 @@
 #include "ArduinoLoopManager.h"
 #include "Configuration.h"
 
-
+enum class CommunicationDirection : unsigned char
+{
+	MasterToSlave = LOW,
+	SlaveToMaster = HIGH
+};
 
 class GateManager final : public Singleton<GateManager>, public IProcessor
 {
@@ -18,15 +22,17 @@ private:
 	
 	virtual void Intialize(std::shared_ptr<GateManager> This) override;
 	explicit GateManager(std::function<void(const String &)> gateStatusCallback);
+	static void SetCommunicationDirection(CommunicationDirection direction);
 	std::function<void(const String &)> _gateStatusCallback;
-	
+	unsigned long _lastStatusCheck = 0;
+	GateStatus _lastKnownStatus = GateStatus::NoStatus;
+	static void Send(Command command);
+	void RecieveStatus();
 
 public:
-
-	static void Send(int command);
-	static void OnCommand(const String & commandName);
 	static void OnButtonPressed();
-	void Loop() override {  }
+	static void OnCommand(const String & commandName);
+	void Loop() override;
 };
 
 

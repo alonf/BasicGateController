@@ -49,7 +49,6 @@ void GateManager::Initialize() //called by the singleton create, after ctor
 }
 
 
-
 void GateManager::ChangeState(GateMovementState *pState)
 {
 	

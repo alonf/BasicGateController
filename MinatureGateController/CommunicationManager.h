@@ -3,6 +3,13 @@
 #ifndef _COMMUNICATIONMANAGER_h
 #define _COMMUNICATIONMANAGER_h
 
+enum class CommunicationDirection : unsigned char
+{
+	MasterToSlave = LOW,
+	SlaveToMaster = HIGH
+};
+
+
 class ICommand 
 {
 public:
@@ -11,45 +18,23 @@ public:
 };
 typedef ICommand* ICommandP_t;
 
-template<int PIN>
-class CommunicationPin
-{
-private:
-	int _oldState = HIGH;
-	const String _command;
-
-public:
-	CommunicationPin(const String &command) : _command(command) { pinMode(PIN, INPUT_PULLUP); }
-
-	const String& Command() const { return _command; }
-
-	bool IsTriggered()
-	{
-		int state = digitalRead(PIN);
-		if (state != _oldState)
-		{
-			Serial.println("Triggered");
-			_oldState = state;
-			if (state == LOW)
-				return true; //triggered
-		}
-		return false;
-	}
-};
 
 class CommunicationManager 
 {
 private:
 	ICommandP_t _pCommandSubscriber;
+	Command _lastCommand = Command::None;
+	GateStatus _gateStatus = GateStatus::NoStatus;
 	void OnCommand(const String& command) const;
-	CommunicationPin<OpenCommand> _open = CommunicationPin<OpenCommand>("open");
-	CommunicationPin<CloseCommand> _close = CommunicationPin<CloseCommand>("close");
-	CommunicationPin<StopCommand> _stop = CommunicationPin<StopCommand>("stop");
-	CommunicationPin<ButtonPressedCommand> _buttonPressed = CommunicationPin<ButtonPressedCommand>("buttonPressed");
+	
+	void ExecuteCommand();
+	void SendStatus() const;
+	void HandleCommunication();
 
 public:
 	void Loop();
-	CommunicationManager(ICommandP_t commandSubscriber) : _pCommandSubscriber(commandSubscriber) {}
+	CommunicationManager(ICommandP_t commandSubscriber);
+	void SetGateStatus(GateStatus status) { _gateStatus = status; }
 };
 
 typedef CommunicationManager * CommunicationManagerP_t;

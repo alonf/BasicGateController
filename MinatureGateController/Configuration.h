@@ -16,9 +16,34 @@ const int flashingLedPeriod = 500; //0.5 second
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 const int stepperSpeed = 40; // 0 > speed < 1024
 const int OpeningDirection = -1; //set the initial motor direction (-1 or 1)
-const int OpenCommand = 2;
-const int CloseCommand = 3;
-const int StopCommand = 5;
-const int ButtonPressedCommand = 8;
+
+enum class Command : unsigned char
+{
+	None = 0b000,
+	Open = 0b001,
+	Close = 0b010,
+	Stop = 0b011,
+	Button = 0b100,
+};
+
+enum class GateStatus : unsigned char
+{
+	NoStatus = 0b000,
+	OpenedMessage = 0b001,
+	OpenningMessage = 0b010,
+	StopedMessage = 0b011,
+	ClosedMessage = 0b100,
+	ClosingMessage = 0b101,
+	UnknownMessage = 0b110,
+	NoStatus1 = 0b111
+};
+
+
+
+const int CommunicationLine0 = 2;
+const int CommunicationLine1 = 3;
+const int CommunicationLine2 = 5;
+const int CommunicationLineDirection = 8; //0=> master send command to slave, 1 => master request data from slave
+
 #endif
 

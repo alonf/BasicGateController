@@ -20,6 +20,8 @@ class CommandHandler : public ICommand
 	}
 };
 
+
+
 void setup() 
 {
 	Serial.begin(115000);
@@ -38,4 +40,8 @@ void loop()
 {
 	pGateManager->Loop();
 	pCommunicationManager->Loop();
+
+	auto statusReportCode = pGateManager->StatusReportCode();
+
+	pCommunicationManager->SetGateStatus(statusReportCode);
 }

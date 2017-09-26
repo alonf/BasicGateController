@@ -5,6 +5,7 @@
 #include "arduino.h"
 #include "Configuration.h"
 #include <Stepper.h>
+#include "CommunicationManager.h"
 
 enum class GateState : unsigned char 
 { 
@@ -17,6 +18,7 @@ class GateManager final
 	class GateMovementState;
 	void ChangeState(GateMovementState *pState);
 	void Initialize();
+	
 	static GateState ReadState();
 	
 	class GateMovementState
@@ -30,6 +32,7 @@ class GateManager final
 		virtual GateState State() const = 0;
 		virtual void Initialize() {}
 		virtual GateState OnButtonPressed(GateState previousMovement) = 0;
+		virtual GateStatus StatusReportCode() const = 0;
 		GateManager *_pGateManager;
 	};
 
@@ -44,6 +47,8 @@ class GateManager final
 		{
 			return previousMovement == GateState::OPENNING ? GateState::CLOSING : GateState::OPENNING;
 		}
+
+		GateStatus StatusReportCode() const override { return GateStatus::StopedMessage; }
 	};
 
 	template<GateState currentState>
@@ -57,6 +62,7 @@ class GateManager final
 		{
 			return currentState == GateState::OPENED ? GateState::CLOSING : GateState::OPENNING;
 		}
+		GateStatus StatusReportCode() const override { return currentState == GateState::OPENED ? GateStatus::OpenedMessage : GateStatus::ClosedMessage; }
 	};
 
 	class GateMovementStopping final : public GateMovementState
@@ -65,6 +71,7 @@ class GateManager final
 		using GateMovementState::GateMovementState;
 	private:
 		GateState State() const override { return GateState::STOPPING; }
+		GateStatus StatusReportCode() const override { return GateStatus::StopedMessage; }
 		virtual void Initialize() override;
 		GateState OnButtonPressed(GateState previousMovement) override
 		{
@@ -82,6 +89,7 @@ class GateManager final
 		{
 			_stepper.setSpeed(stepperSpeed);
 		}
+		GateStatus StatusReportCode() const override { return CurrentState == GateState::OPENNING ? GateStatus::OpenningMessage : GateStatus::ClosingMessage; }
 
 	private:
 		Stepper _stepper;
@@ -115,6 +123,7 @@ public:
 	explicit GateManager();
 	void OnCommand(const String & commandName);
 	const String &Status() const { return _statuses[static_cast<unsigned char>(_state->State())]; }
+	GateStatus StatusReportCode() const { return _state->StatusReportCode(); }
 	void OnButtonPressed();
 	void Loop();
 };

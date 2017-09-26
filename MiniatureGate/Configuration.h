@@ -23,10 +23,34 @@ const int redLed = D6;
 const int greenLed = D7; 
 const int ButtonPressed = LOW;
 const int ButtonReleased = ButtonPressed == HIGH ? LOW : HIGH;
-const int I2CAddress = 8;
-const int OpenCommand = D2;
-const int CloseCommand = D1;
-const int StopCommand = D5;
-const int ButtonPressedCommand = D0;
+
+enum class Command : unsigned char
+{
+	None = 0b000,
+	Open = 0b001,
+	Close = 0b010,
+	Stop = 0b011,
+	Button = 0b100,
+};
+
+enum class GateStatus : unsigned char
+{
+	NoStatus = 0b000,
+	OpenedMessage = 0b001,
+	OpenningMessage = 0b010,
+	StopedMessage = 0b011,
+	ClosedMessage = 0b100,
+	ClosingMessage = 0b101,
+	UnknownMessage = 0b110,
+	NoStatus1 = 0b111
+};
+
+
+const int CommunicationLine0 = D2;
+const int CommunicationLine1 = D1;
+const int CommunicationLine2 = D5;
+const int CommunicationLineDirection = D0; //LOW => master send command to slave, HIGH => master request data from slave
+const unsigned int StatusPollingInterval = 500; //0.5 seconds
+
 #endif
 
