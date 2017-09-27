@@ -15,7 +15,7 @@ const int flashingLED = 4;
 const int flashingLedPeriod = 500; //0.5 second
 const int stepsPerRevolution = 200;  // change this to fit the number of steps per revolution
 const int stepperSpeed = 40; // 0 > speed < 1024
-const int OpeningDirection = -1; //set the initial motor direction (-1 or 1)
+const int OpeningDirection = 1; //set the initial motor direction (-1 or 1)
 
 enum class Command : unsigned char
 {
@@ -40,8 +40,8 @@ enum class GateStatus : unsigned char
 
 
 
-const int CommunicationLine0 = 2;
-const int CommunicationLine1 = 3;
+const int CommunicationLine0 = 3;
+const int CommunicationLine1 = 2;
 const int CommunicationLine2 = 5;
 const int CommunicationLineDirection = 8; //0=> master send command to slave, 1 => master request data from slave
 

@@ -51,6 +51,8 @@ void CommunicationManager::ExecuteCommand()
 		return; //noting to do
 
 	_lastCommand = command;
+	Serial.print("Command code: ");
+	Serial.println(commandBuilder);
 
 	switch (command)
 	{
@@ -67,7 +69,7 @@ void CommunicationManager::ExecuteCommand()
 		OnCommand("buttonPressed");
 		break;
 	default:
-		Serial.println("Error reading command");
+		Serial.println("command cleared");
 	}
 }
 
@@ -75,9 +77,12 @@ void CommunicationManager::ExecuteCommand()
 void CommunicationManager::SendStatus() const
 {
 	auto statusCode = static_cast<unsigned char>(_gateStatus);
-
-	Serial.print("Sending status code:");
-	Serial.println(statusCode);
+	if (statusCode != _previousSentStatusCode)
+	{
+		Serial.print("Sending status code:");
+		Serial.println(statusCode);
+		_previousSentStatusCode = statusCode;
+	}
 
 	digitalWrite(CommunicationLine0, statusCode & 0b001 ? HIGH : LOW);
 	digitalWrite(CommunicationLine1, statusCode & 0b010 ? HIGH : LOW);

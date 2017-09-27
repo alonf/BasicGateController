@@ -61,9 +61,6 @@
     <ClInclude Include="WiFiManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="CommunicationManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ArduinoLoopManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -10,6 +10,7 @@ GateManager::GateManager(function<void(const String &)> gateStatusCallback) : _g
 
 void GateManager::SetCommunicationDirection(CommunicationDirection direction)
 {
+	
 	if (direction == CommunicationDirection::MasterToSlave)
 	{
 		pinMode(CommunicationLine0, OUTPUT);
@@ -22,7 +23,7 @@ void GateManager::SetCommunicationDirection(CommunicationDirection direction)
 		digitalWrite(CommunicationLine2, HIGH);
 
 		pinMode(CommunicationLineDirection, OUTPUT);
-		digitalWrite(CommunicationLineDirection, HIGH);
+		digitalWrite(CommunicationLineDirection, LOW);
 	}
 	else
 	{
@@ -103,7 +104,7 @@ void GateManager::RecieveStatus()
 
 	if (_lastKnownStatus != status)
 	{
-		Serial.printf("The gate status is: %s\n", statusMsg.c_str());
+		Serial.printf("The gate status is: (%d) %s\n", statusBuilder, statusMsg.c_str());
 		_lastKnownStatus = status;
 	}
 }

@@ -25,6 +25,7 @@ private:
 	ICommandP_t _pCommandSubscriber;
 	Command _lastCommand = Command::None;
 	GateStatus _gateStatus = GateStatus::NoStatus;
+	mutable unsigned char _previousSentStatusCode = 0;
 	void OnCommand(const String& command) const;
 	
 	void ExecuteCommand();
