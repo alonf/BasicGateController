@@ -8,7 +8,7 @@ extern "C" {
 #endif
 	void AzureIoTHubLoop(void);
 	bool AzureIoTHubInit(const char *connectionString);
-	bool AzureIoTHubSendMessage(char *deviceId, const char *status);
+	bool AzureIoTHubSendMessage(const char *deviceId, const char *status);
 
 #ifdef __cplusplus
 }

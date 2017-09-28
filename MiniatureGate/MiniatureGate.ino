@@ -218,7 +218,7 @@ void setup()
 		logger->WriteMessage(gateStatus);
 		if (configurationManger->ShouldUseAzureIoTHub())
 		{
-			azureIoTHubManager->UpdateGateStatus(deviceId, gateStatus); //TODO: change to the ConfigurationManager DeviceId
+			azureIoTHubManager->UpdateGateStatus(configurationManger->GetIoTHubDeviceId().c_str(), gateStatus); 
 		}
 		::gateStatus = gateStatus;
 	});

@@ -105,6 +105,10 @@ void GateManager::RecieveStatus()
 	if (_lastKnownStatus != status)
 	{
 		Serial.printf("The gate status is: (%d) %s\n", statusBuilder, statusMsg.c_str());
+
+		if (_gateStatusCallback)
+			_gateStatusCallback(statusMsg);
+
 		_lastKnownStatus = status;
 	}
 }
