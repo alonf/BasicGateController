@@ -37,7 +37,7 @@ enum class GateStatus : unsigned char
 {
 	NoStatus = 0b000,
 	OpenedMessage = 0b001,
-	OpenningMessage = 0b010,
+	OpeningMessage = 0b010,
 	StopedMessage = 0b011,
 	ClosedMessage = 0b100,
 	ClosingMessage = 0b101,

@@ -75,8 +75,8 @@ void GateManager::RecieveStatus()
 	case GateStatus::OpenedMessage:
 		statusMsg = "Gate Open";
 		break;
-	case GateStatus::OpenningMessage:
-		statusMsg = "Gate Openning";
+	case GateStatus::OpeningMessage:
+		statusMsg = "Gate Opening";
 		break;
 	case GateStatus::StopedMessage:
 		statusMsg = "Gate Movement Stopped";

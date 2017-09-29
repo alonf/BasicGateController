@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="MinatureGateController.ino" />
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Configuration.h">

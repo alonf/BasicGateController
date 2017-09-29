@@ -16,8 +16,8 @@ void GateManager::Initialize() //called by the singleton create, after ctor
 	static auto gateMovementOpenedState = GateMovementOpenedClosedState<GateState::OPENED >(this);
 	_states[static_cast<unsigned char>(GateState::OPENED)] = &gateMovementOpenedState;
 
-	static auto gateMovementOpennign = GateMovementOpennignOrClosing<OpeningDirection, GateState::OPENNING, GateState::OPENED>(this);
-	_states[static_cast<unsigned char>(GateState::OPENNING)] = &gateMovementOpennign;
+	static auto gateMovementOpening = GateMovementOpenigOrClosing<OpeningDirection, GateState::OPENNING, GateState::OPENED>(this);
+	_states[static_cast<unsigned char>(GateState::OPENNING)] = &gateMovementOpening;
 
 	static auto gateMovementStopping = GateMovementStopping(this);
 	_states[static_cast<unsigned char>(GateState::STOPPING)] = &gateMovementStopping;
@@ -25,7 +25,7 @@ void GateManager::Initialize() //called by the singleton create, after ctor
 	static auto gateMovementStopped = GateMovementStandstillInTheMiddleState<GateState::STOPPED>(this);
 	_states[static_cast<unsigned char>(GateState::STOPPED)] = &gateMovementStopped;
 
-	static auto gateMovementClosing = GateMovementOpennignOrClosing<-OpeningDirection, GateState::CLOSING, GateState::CLOSED>(this);
+	static auto gateMovementClosing = GateMovementOpenigOrClosing<-OpeningDirection, GateState::CLOSING, GateState::CLOSED>(this);
 	_states[static_cast<unsigned char>(GateState::CLOSING)] = &gateMovementClosing;
 
 	static auto gateMovementClosedState = GateMovementOpenedClosedState<GateState::CLOSED>(this);

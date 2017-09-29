@@ -80,16 +80,16 @@ class GateManager final
 	};
 
 	template<int Direction, GateState CurrentState, GateState EndState>
-	class GateMovementOpennignOrClosing : public GateMovementState
+	class GateMovementOpenigOrClosing : public GateMovementState
 	{
 	public:
-		explicit GateMovementOpennignOrClosing(GateManager *pGateManager) : 
+		explicit GateMovementOpenigOrClosing(GateManager *pGateManager) : 
 			GateMovementState(pGateManager),
 			_stepper(stepsPerRevolution, stepper1, stepper2, stepper3, stepper4)
 		{
 			_stepper.setSpeed(stepperSpeed);
 		}
-		GateStatus StatusReportCode() const override { return CurrentState == GateState::OPENNING ? GateStatus::OpenningMessage : GateStatus::ClosingMessage; }
+		GateStatus StatusReportCode() const override { return CurrentState == GateState::OPENNING ? GateStatus::OpeningMessage : GateStatus::ClosingMessage; }
 
 	private:
 		Stepper _stepper;
@@ -131,14 +131,14 @@ public:
 
 
 template <int Direction, GateState CurrentState, GateState EndState>
-void GateManager::GateMovementOpennignOrClosing<Direction, CurrentState, EndState>::Initialize()
+void GateManager::GateMovementOpenigOrClosing<Direction, CurrentState, EndState>::Initialize()
 {
 	_flashingLedState = HIGH;
 	_flashingLedTime = millis();
 }
 
 template <int Direction, GateState CurrentState, GateState EndState>
-void GateManager::GateMovementOpennignOrClosing<Direction, CurrentState, EndState>::Loop()
+void GateManager::GateMovementOpenigOrClosing<Direction, CurrentState, EndState>::Loop()
 {
 	auto currentTick = millis();
 	//handle flashing led blinks

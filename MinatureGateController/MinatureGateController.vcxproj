@@ -84,6 +84,7 @@
     <DebuggerFlavor>VisualMicroDebugger</DebuggerFlavor>
   </PropertyGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="MinatureGateController.ino">
       <FileType>CppCode</FileType>
     </None>
