@@ -5,30 +5,34 @@
              x:Class="BasicGateApp.MainPage">
     <StackLayout>
         <Frame HasShadow="True" OutlineColor="Black">
-            <Button Text="Toggle Blue LED"
-                FontSize="48"
-                HorizontalOptions="Center"
-                VerticalOptions="CenterAndExpand"
-                Clicked="OnToggleBlueLed"/>
-        </Frame>
-        <Frame HasShadow="True" OutlineColor="Black">
             <StackLayout Orientation="Vertical">
             <Button Text="Open Gate"
                 FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
-                Clicked="OnOpenMiniatureGate"/>
+                Clicked="OnOpenModelGate"/>
                 <Button Text="Close Gate"
                 FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
-                Clicked="OnCloseMiniatureGate"/>
+                Clicked="OnCloseModelGate"/>
                 <Button Text="Stop Gate"
                 FontSize="48"
                 HorizontalOptions="Center"
                 VerticalOptions="CenterAndExpand"
-                Clicked="OnStopMiniatureGate"/>
+                Clicked="OnStopModelGate"/>
+                <Button Text="Switch to web interface"
+                FontSize="48"
+                BackgroundColor="Red"
+                HorizontalOptions="Center"
+                VerticalOptions="CenterAndExpand"
+                Clicked="OnSwitchToWebModelGate"/>
             </StackLayout>
+        </Frame>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <ListView x:Name="GateMessagesView">
+                
+            </ListView>
         </Frame>
     </StackLayout>
 </forms:ContentPage>

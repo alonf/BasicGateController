@@ -11,10 +11,14 @@ namespace BasicGateApp
 {
 	public partial class MainPage : ContentPage
 	{
+	    private GateMessages _gateMessages = new GateMessages();
+
 		public MainPage()
 		{
-			InitializeComponent();
-		}
+		    InitializeComponent();
+		    GateMessagesView.ItemsSource = _gateMessages.Messages;
+
+        }
 
 	    async Task<string> SendCloudToDeviceCommandAsync(string deviceId, string command)
 	    {
@@ -41,31 +45,30 @@ namespace BasicGateApp
             }
         }
 
-	    private async void OnToggleBlueLed(object sender, EventArgs e)
+	    private  async Task OnActivateModelGateAsync(string command)
 	    {
-	        var result = await SendCloudToDeviceCommandAsync("SimpleRelay", "Toggle");
-	        await DisplayAlert("Fun Propellor HTTP Get result", result, "OK");
-	    }
-
-	    private  async Task OnActivateMiniatureGateAsync(string command)
-	    {
-            var result = await SendCloudToDeviceCommandAsync("MiniatureGate", command);
-            await DisplayAlert("Miniature Gate HTTP Get result", result, "OK");
+            var result = await SendCloudToDeviceCommandAsync("ModelGate", command);
+            await DisplayAlert("Model Gate HTTP Get result", result, "OK");
         }
 
-	    private async void OnStopMiniatureGate(object sender, EventArgs e)
+	    private async void OnStopModelGate(object sender, EventArgs e)
 	    {
-	        await OnActivateMiniatureGateAsync("Stop");
+	        await OnActivateModelGateAsync("Stop");
 	    }
 
-	    private async void OnOpenMiniatureGate(object sender, EventArgs e)
+	    private async void OnOpenModelGate(object sender, EventArgs e)
 	    {
-            await OnActivateMiniatureGateAsync("Open");
+            await OnActivateModelGateAsync("Open");
         }
 
-	    private async void OnCloseMiniatureGate(object sender, EventArgs e)
+	    private async void OnCloseModelGate(object sender, EventArgs e)
 	    {
-            await OnActivateMiniatureGateAsync("Close");
+            await OnActivateModelGateAsync("Close");
+        }
+
+        private async void OnSwitchToWebModelGate(object sender, EventArgs e)
+	    {
+            await OnActivateModelGateAsync("Web");
         }
 	}
 }
