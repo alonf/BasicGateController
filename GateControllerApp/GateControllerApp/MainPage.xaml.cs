@@ -32,10 +32,6 @@ namespace GateControllerApp
                     {
                         _gateMessages.Messages.Add(result);
                     }
-                    else
-                    {
-                        await Task.Delay(TimeSpan.FromSeconds(15));
-                    }
                 }
                 catch (Exception e)
                 {
