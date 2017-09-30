@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GateControllerApp"
+             x:Class="GateControllerApp.MainPage">
+
+    <StackLayout>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <StackLayout Orientation="Vertical">
+                <Button Text="Open Gate"
+                        FontSize="48"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"
+                        Clicked="OnOpenModelGate"/>
+                <Button Text="Close Gate"
+                        FontSize="48"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"
+                        Clicked="OnCloseModelGate"/>
+                <Button Text="Stop Gate"
+                        FontSize="48"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"
+                        Clicked="OnStopModelGate"/>
+                <Button Text="Switch to web interface"
+                        FontSize="48"
+                        BackgroundColor="Red"
+                        HorizontalOptions="Center"
+                        VerticalOptions="CenterAndExpand"
+                        Clicked="OnSwitchToWebModelGate"/>
+            </StackLayout>
+        </Frame>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <ListView x:Name="GateMessagesView">
+
+            </ListView>
+        </Frame>
+    </StackLayout>
+
+</ContentPage>
