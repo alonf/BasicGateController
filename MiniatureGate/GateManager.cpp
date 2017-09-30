@@ -131,5 +131,5 @@ void GateManager::Send(Command command)
 	digitalWrite(CommunicationLine0, commandCode & 0b001 ? HIGH : LOW);
 	digitalWrite(CommunicationLine1, commandCode & 0b010 ? HIGH : LOW);
 	digitalWrite(CommunicationLine2, commandCode & 0b100 ? HIGH : LOW);
-	delay(100); 
+	delay(10); 
 }

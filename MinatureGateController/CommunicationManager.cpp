@@ -27,7 +27,7 @@ void CommunicationManager::HandleCommunication()
 		pinMode(CommunicationLine0, INPUT_PULLUP);
 		pinMode(CommunicationLine1, INPUT_PULLUP);
 		pinMode(CommunicationLine2, INPUT_PULLUP);
-		delay(50); //wait for the lines to become stable
+		delay(10); //wait for the lines to become stable
 		ExecuteCommand();
 	}
 	else
