@@ -91,6 +91,7 @@ private:
 	void HandleCommand(const WebCommandPtr_t& webCommand);
 
  public:
+	const char *GetName() const override { return "WebServer"; }
 	void RegisterCommand(const WebCommandPtr_t& command);
 	template<typename T>
 	void SetWebSiteHeader(T header) { _header = std::forward<T>(header); }

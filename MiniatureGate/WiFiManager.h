@@ -86,6 +86,7 @@ private:
 	WiFiManager(const String &ssid, const String &password, bool isAccessPointMode);
 
  public:
+	const char *GetName() const override { return "WiFiManager"; }
 	void RegisterClient(const wifiNotificarionFunc_t& notification);
 	bool IsConnected() const;
 	void Loop() override;

@@ -17,6 +17,7 @@ private:
 	LedsLoggerPtr_t _ledsLogger;
 	Logger(int redLedPin, int greenLedPin, int baudRate);
 public:
+	const char *GetName() const override { return "Logger"; }
 	void Loop() override { _ledsLogger->Loop(); }
 	void OnCommand(const String &commandName) const;
 	void WriteErrorMessage(const String &message, int blinks) const;

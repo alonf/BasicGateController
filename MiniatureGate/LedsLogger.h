@@ -42,6 +42,7 @@ class LedsLogger : public Singleton<LedsLogger>, public IProcessor
 	 LedsLogger(int redLedPin, int greenLedPin) : _red(redLedPin), _green(greenLedPin) {}
 
  public:
+	 const char *GetName() const override { return "LedsLogger"; }
 	 void BlinkRed(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0) { _red.Blink(times, delay, delayBeforeStart); }
 	 void BlinkGreen(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0) { _green.Blink(times, delay, delayBeforeStart); }
 	 void SetRed(int value) { _red.Set(value); }

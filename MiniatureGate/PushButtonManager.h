@@ -42,7 +42,7 @@ private:
 	PushButtonManager(int pin, IPushButtonActionsPtr_t pushButtonActions);
 
 public:
-    
+	const char *GetName() const override { return "PushButtonManager"; }
     PushButtonManager(const PushButtonManager&) = delete;
     PushButtonManager& operator=(const PushButtonManager&) = delete;
     PushButtonManager(const PushButtonManager&&) = delete;

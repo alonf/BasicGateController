@@ -27,6 +27,7 @@ private:
 	bool CheckIoTHubClientInitiated();
 	AzureIoTHubManager(const WiFiManagerPtr_t& wifiManager, LoggerPtr_t logger, const char* connectionString);
 public:
+	const char *GetName() const override { return "AzureIoTHubManager"; }
 	void Register(WebNotificationPtr_t subscriber) { _pubsub.Register(subscriber); }
 	void Loop() override;
 	void UpdateGateStatus(const char *deviceId, const String& status) const;

@@ -3,6 +3,7 @@
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
 #include <AzureIoTProtocol_MQTT.h>
+
 #include <dummy.h>
 #include <EEPROM.h>
 #include "ConfigurationManager.h"
@@ -231,10 +232,17 @@ void setup()
 void loop()
 {
 	if (g_shouldReset)
+	{
+		Serial.println("A reset received!");
+		for (int i = 0; i < 3000; ++i) //give some time to finish answering commands
+		{
+			loopManager->Loop();
+		}
+		Serial.println("Resetting the device");
 		Reset();
+	}
 
 	loopManager->Loop();
-	
 }
 
 void OnButtonPressed()

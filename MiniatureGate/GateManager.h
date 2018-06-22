@@ -31,6 +31,7 @@ private:
 	void RecieveStatus();
 
 public:
+	const char *GetName() const override { return "GateManager"; }
 	static void OnButtonPressed();
 	static void OnCommand(const String & commandName);
 	void Loop() override;
