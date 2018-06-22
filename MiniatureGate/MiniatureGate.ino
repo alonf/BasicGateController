@@ -1,4 +1,3 @@
-#include <AzureIoTHub.h>
 #include <Arduino.h>
 #include <Wire.h>
 #include <Stepper.h>
@@ -11,8 +10,10 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClientSecure.h>
 #include <WiFiUdp.h>
+#include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
+#include <AzureIoTProtocol_MQTT.h>
 #include <dummy.h>
 #include <EEPROM.h>
 #include "ConfigurationManager.h"
