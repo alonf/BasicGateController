@@ -3,10 +3,7 @@
 #ifndef _WIFIMANAGER_h
 #define _WIFIMANAGER_h
 
-#include "Arduino.h"
-#include <ESP8266WiFi.h>
-#include <WiFiClientSecure.h>
-#include <WiFiUdp.h>
+#include <utility>
 #include <vector>
 #include <array>
 #include <map>
@@ -15,6 +12,7 @@
 #include "Singleton.h"
 #include "ArduinoLoopManager.h"
 #include <list>
+#include <ESP8266WiFi.h>
 
 enum class WiFiStatus
 {
@@ -53,8 +51,9 @@ private:
 	template<typename T>
 	static void AddAccessPointInfo(T &&apInfo) { _accessPointList.push_back(std::forward<T>(apInfo)); }
 
-	ConnectionStatus(int status, IPAddress localIP, bool justConnected = false, bool justDisconnected = false, bool isAccessPointMode = false) : _status(status), _localIP(localIP), _justConnected(justConnected), _justDisconnected(justDisconnected), _isAccessPointMode(isAccessPointMode)
-	{}
+	ConnectionStatus(int status, IPAddress localIP, bool justConnected = false, bool justDisconnected = false, bool isAccessPointMode = false) : 
+        _status(status), _localIP(std::move(localIP)), _justConnected(justConnected), _justDisconnected(justDisconnected), _isAccessPointMode(isAccessPointMode)
+	    {}
 
 public:
 	int WifiCode() const { return _status; }
@@ -82,12 +81,12 @@ private:
 	bool _initiated = false;
 
 	void UpdateStatus();
-	void NotifyAll(ConnectionStatus status) const;
+	void NotifyAll(const ConnectionStatus& status) const;
 	static void PopulateWiFiNetworks();
-	WiFiManager(const String &ssid, const String &password, bool isAccesspointMode);
+	WiFiManager(const String &ssid, const String &password, bool isAccessPointMode);
 
  public:
-	void RegisterClient(wifiNotificarionFunc_t notification);
+	void RegisterClient(const wifiNotificarionFunc_t& notification);
 	bool IsConnected() const;
 	void Loop() override;
 	void HandleAccessPointModeStatus();

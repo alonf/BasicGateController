@@ -1,15 +1,4 @@
-#include <Arduino.h>
-#include <Wire.h>
-#include <Stepper.h>
-#include <ESP8266mDNS.h>
-#include <ESP8266WebServer.h>
-#include <WiFiUdp.h>
-#include <WiFiServer.h>
-#include <WiFiClientSecure.h>
 #include <WiFiClient.h>
-#include <ESP8266WiFi.h>
-#include <WiFiClientSecure.h>
-#include <WiFiUdp.h>
 #include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
@@ -18,8 +7,6 @@
 #include <EEPROM.h>
 #include "ConfigurationManager.h"
 #include "ArduinoLoopManager.h"
-#include "PubSub.h"
-#include "AzureIoTHubHttpClient.h"
 #include "Singleton.h"
 #include "Util.h"
 #include "WiFiManager.h"
@@ -30,6 +17,7 @@
 #include "Configuration.h"
 #include "GateManager.h"
 #include "PushButtonManager.h"
+#include <Arduino.h>
 
 using namespace std;
 
@@ -85,7 +73,7 @@ private:
 	weak_ptr<WebServer> _webServer;
 
 public:
-	WebCommand(String menuEntry, String commandName, WebServerPtr_t webServer) : _menuEnrty(menuEntry), _commandName(commandName),
+	WebCommand(const String &menuEntry, const String & commandName, const WebServerPtr_t& webServer) : _menuEnrty(menuEntry), _commandName(commandName),
 		_resultHtml(String("Processing ") + _commandName + " Command"), _webServer(webServer)
 	{
 	}
@@ -169,10 +157,10 @@ class PushButtonActions final : public IPushButtonActions
 {
 private:
 	void OnPress() override { OnButtonPressed(); }
-	int GetLongPressPeriod() override { return 5000; } //5 seconds
+	unsigned int GetLongPressPeriod() override { return 5000; } //5 seconds
 	void OnLongPressDetected() override { logger->OnLongButtonPressDetection(); }
 	void OnLongPress() override { Reset(); }
-	int GetVeryLongPressPeriod() override { return 20000; }//20 seconds
+	unsigned int GetVeryLongPressPeriod() override { return 20000; }//20 seconds
 	void OnVeryLongPressDetected() override { logger->OnVeryLongButtonPressDetection(); }
 	void OnVeryLongPress() override { ResetToAccessPointMode(); }
 };

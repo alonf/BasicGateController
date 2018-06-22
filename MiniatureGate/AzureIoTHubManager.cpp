@@ -1,10 +1,14 @@
 #include "AzureIoTHubManager.h"
+#include "AzureIoTHubHttpClient.h"
+#include <ctime>
+#include <utility>
 #include <Arduino.h>
 
 using namespace std;
 
 
-AzureIoTHubManager::AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, const char* connectionString) :  _logger(logger),  _azureIoTHubDeviceConnectionString(connectionString)
+AzureIoTHubManager::AzureIoTHubManager(const WiFiManagerPtr_t& wifiManager, LoggerPtr_t logger, const char* connectionString) :  
+_logger(std::move(logger)),  _azureIoTHubDeviceConnectionString(connectionString)
 {
 	wifiManager->RegisterClient([this](ConnectionStatus status) { UpdateStatus(status); });
 }
@@ -35,10 +39,8 @@ bool AzureIoTHubManager::CheckTimeInitiated()
 	
 	if (_IsInitTime == false)
 		return false;
-	
-	time_t epochTime;
 
-	epochTime = time(nullptr);
+    const time_t epochTime = time(nullptr);
 
 	if (epochTime == 0)
 	{
@@ -81,13 +83,13 @@ void AzureIoTHubManager::Loop()
 	AzureIoTHubLoop();
 }
 
-void AzureIoTHubManager::UpdateGateStatus( const char *deviceId, String status) const
+void AzureIoTHubManager::UpdateGateStatus( const char *deviceId, const String& status) const
 {
 	if (_isIotHubClientInitiated)
 		AzureIoTHubSendMessage(deviceId, status.c_str());
 }
 
-void AzureIoTHubManager::UpdateStatus(ConnectionStatus status)
+void AzureIoTHubManager::UpdateStatus(const ConnectionStatus& status)
 {
 	if (status.IsJustConnected() && !_IsInitTime) //new connection, only once
 	{

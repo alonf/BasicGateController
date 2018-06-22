@@ -1,13 +1,8 @@
+#include <Stepper.h>
 #include <Arduino.h>
 #include <Wire.h>
-#include <Stepper.h>
-#include "Configuration.h"
 #include "GateManager.h"
 #include "CommunicationManager.h"
-
-using namespace std;
-
-
 
 GateManagerP_t pGateManager;
 CommunicationManagerP_t pCommunicationManager;
@@ -41,7 +36,7 @@ void loop()
 	pGateManager->Loop();
 	pCommunicationManager->Loop();
 
-	auto statusReportCode = pGateManager->StatusReportCode();
+    const auto statusReportCode = pGateManager->StatusReportCode();
 
 	pCommunicationManager->SetGateStatus(statusReportCode);
 }

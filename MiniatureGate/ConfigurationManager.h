@@ -2,7 +2,6 @@
 
 #ifndef _CONFIGURATIONMANAGER_h
 #define _CONFIGURATIONMANAGER_h
-#include <algorithm>
 #include "Singleton.h"
 #include "WebServer.h"
 
@@ -27,12 +26,12 @@ private:
 		unsigned int milliSecondsButonLongTimePeriod;
 		unsigned int milliSecondsButonVeryLongTimePeriod;
 		bool bUseAzureIoTHub;
-	} _eepromInformationBlock;
+	} _eepromInformationBlock{};
 
 	const unsigned char _magicNumber[6] = { 'M', 'A', 'G', 'I', 'C', 0 };
 	bool CheckMagicNumber() const;
-	void WriteMagicNumber();
-	void ClearMagicNumber();
+	void WriteMagicNumber() const;
+	void ClearMagicNumber() const;
 	void ReadEEPROMInfo();
 	void FlashEEPROMInfo();
 	ConfigurationManager();
@@ -43,13 +42,13 @@ private:
 	void SetWiFiCredentials(const String& SSID, const String& password);
 	void SetAzureIoTHubInformation(const String &azureIoTConnectionString, const String &iotHubDeviceId);
 	void SetWebServerMode(); //don't use Azure IoT
-	String GetAzureIoTConnectionString();
+	String GetAzureIoTConnectionString() const;
 	String GetIoTHubDeviceId() const;
 	void SetButonPressTimesMilliSeconds(unsigned int longPeriod, unsigned int veryLongPeriod);
 	unsigned int GetLongPeriodButonPressTimesMilliSeconds() const { return _eepromInformationBlock.milliSecondsButonLongTimePeriod; }
-	bool ShouldUseAzureIoTHub() { return _eepromInformationBlock.bUseAzureIoTHub; }
+	bool ShouldUseAzureIoTHub() const { return _eepromInformationBlock.bUseAzureIoTHub; }
 	unsigned int GetVeryLongPeriodButonPressTimesMilliSeconds() const { return _eepromInformationBlock.milliSecondsButonVeryLongTimePeriod; }
-	void FacrotyReset();
+	void FacrotyReset() const;
 	void FlashEEProm();
 	bool IsAccessPointMode() const { return !CheckMagicNumber(); }
 	void DumpEEPromInfo();

@@ -6,7 +6,7 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-	void AzureIoTHubLoop(void);
+	void AzureIoTHubLoop();
 	bool AzureIoTHubInit(const char *connectionString);
 	bool AzureIoTHubSendMessage(const char *deviceId, const char *status);
 

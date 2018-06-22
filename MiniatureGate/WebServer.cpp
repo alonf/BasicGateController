@@ -1,16 +1,17 @@
 #include "WebServer.h"
-#include "Util.h"
 #include "WebSettings.h"
-#include <algorithm>
+#include <ESP8266mDNS.h>
+#include <utility>
+#include "Util.h"
 
 
 using namespace std;
 ///*static*/ char WebServer::_setupHtmlBuffer[3072]; //for setup html result
-WebServer::WebServer(WiFiManagerPtr_t wifiManager, int port, const char *appKey, std::unique_ptr<DeviceSettings> deviceSettings, std::function<String ()> gateStatusUpdater) :
+WebServer::WebServer(const WiFiManagerPtr_t& wifiManager, int port, const char *appKey, std::unique_ptr<DeviceSettings> deviceSettings, std::function<String ()> gateStatusUpdater) :
 	_deviceSettings(move(deviceSettings)),
 	_server(port), 
 	_authorizedUrl(String("/") + appKey),
-	_gateStatusUpdater(gateStatusUpdater)
+	_gateStatusUpdater(std::move(gateStatusUpdater))
 {
 	_server.on("/", [this]() { HandleError(); });
 	_server.on((_authorizedUrl + "/view.css").c_str(), [this]() { HandleSendViewCSS(); });
@@ -26,7 +27,7 @@ WebServer::WebServer(WiFiManagerPtr_t wifiManager, int port, const char *appKey,
 	wifiManager->RegisterClient([this](ConnectionStatus status) { UpdateStatus(status); });
 }
 
-void WebServer::RegisterCommand(WebCommandPtr_t command)
+void WebServer::RegisterCommand(const WebCommandPtr_t& command)
 {
 	_webCommands.push_back(command);
 	auto url = String(CreateUrl(command->TriggerUrl()));
@@ -52,7 +53,7 @@ void WebServer::HandleMain()
 {
 	auto html = String("<p><h3>The current gate status is ") +
 		(_gateStatusUpdater ? _gateStatusUpdater() : String("not implemented")) + "</h3></p>";
-	for (auto webCommand : _webCommands)
+	for (const auto& webCommand : _webCommands)
 	{
 		html += String(R"(<p><a href=")") + CreateUrl(webCommand->TriggerUrl()) + String(R"(">)") + webCommand->MenuEntry() + String("</a></p>");
 	}
@@ -62,7 +63,7 @@ void WebServer::HandleMain()
 
 void WebServer::ProcessHTTPSetupRequest()
 {
-	bool result = PopulateHTMLSetupFromTemplate(WebSettingHtmlTemplate, _templateValuesMap);
+	const bool result = PopulateHTMLSetupFromTemplate(WebSettingHtmlTemplate, _templateValuesMap);
 	if (result) //finished
 	{
 		_isHttpSetupRequestOn = false;
@@ -134,13 +135,13 @@ void WebServer::HandleSendAPList()
 
 bool WebServer::PopulateHTMLSetupFromTemplate(const String &htmlTemplate, const Util::StringMap & map) 
 {
-	int startTime = millis();
+    const int startTime = millis();
 	do
 	{
 		if (millis() - startTime > 25) //0.025 seconds per parsing iteration
 			return false;
 		Serial.printf("Continue setup template processing, index: %d\n", _templateIndex);
-		int beginVariable = htmlTemplate.indexOf('%', _templateIndex); //search <%= by searching %
+	    const int beginVariable = htmlTemplate.indexOf('%', _templateIndex); //search <%= by searching %
 		int endVariable = -1;
 		if (beginVariable >= 0) //only if beginVariable didn't reach the end of html
 			endVariable = htmlTemplate.indexOf('%', beginVariable + 1);
@@ -159,8 +160,8 @@ bool WebServer::PopulateHTMLSetupFromTemplate(const String &htmlTemplate, const 
 			++_templateIndex;
 			continue;
 		}
-		auto variableName = htmlTemplate.substring(beginVariable + 2, endVariable);
-		String replacedValue = map.at(variableName); //extract only the variable name and replace it
+	    const auto variableName = htmlTemplate.substring(beginVariable + 2, endVariable);
+	    const String& replacedValue = map.at(variableName); //extract only the variable name and replace it
 		String htmlUntilVariable = htmlTemplate.substring(_templateIndex, beginVariable - 1);
 
 		//Add all text before the variable and the replacement
@@ -185,8 +186,8 @@ void WebServer::HandleSetConfiguration()
 	_deviceSettings->accessPointPassword = _server.arg("WFPwd").c_str();
 	_deviceSettings->AzureIoTDeviceId = _server.arg("DeviceId").c_str();
 	_deviceSettings->azureIoTHubConnectionString = _server.arg("IoTConStr").c_str();
-	_deviceSettings->longButtonPeriod = atoi(_server.arg("PBLng").c_str());
-	_deviceSettings->veryLongButtonPeriod = atoi(_server.arg("PBVLng").c_str());
+	_deviceSettings->longButtonPeriod = atoi(_server.arg("PBLng").c_str());  // NOLINT(cert-err34-c)
+	_deviceSettings->veryLongButtonPeriod = atoi(_server.arg("PBVLng").c_str()); // NOLINT(cert-err34-c)
 	_deviceSettings->shouldUseAzureIoT = _server.arg("WebOrIoT") == "IoT";
 	printf("Server arguments:\n");
 	for (int i = 0; i < _server.args(); ++i)
@@ -203,7 +204,7 @@ void WebServer::HandleSetConfiguration()
 		html += " seconds. The two leds should blink very fast.";
 
 		SendBackHtml(html.c_str());
-		_configurationUpdater(*_deviceSettings.get());
+		_configurationUpdater(*_deviceSettings);
 		Util::software_Reboot();
 }
 
@@ -217,9 +218,9 @@ void WebServer::HandleResetAccessPoint()
 		html += "</p>";
 
 	SendBackHtml(html.c_str());
-	_configurationUpdater(*_deviceSettings.get()); //this will reset the device
+	_configurationUpdater(*_deviceSettings); //this will reset the device
 }
-void WebServer::HandleCommand(WebCommandPtr_t webCommand)
+void WebServer::HandleCommand(const WebCommandPtr_t& webCommand)
 {
 	//auto html = String("<p><h3>") + webCommand->ResultHTML() +String("</h3></p>");
 	_pubsub.NotifyAll(webCommand->Name());
@@ -227,7 +228,7 @@ void WebServer::HandleCommand(WebCommandPtr_t webCommand)
 	//SendBackHtml(html);
 }
 
-bool WebServer::IsConnected() const
+/* static */ bool WebServer::IsConnected()
 {
 	return WiFi.status() == WL_CONNECTED;
 }
@@ -245,7 +246,7 @@ void WebServer::SetUpdateConfiguration(std::function<void(const DeviceSettings&)
 	_configurationUpdater = configurationUpdater;
 }
 
-void WebServer::UpdateStatus(ConnectionStatus status)
+void WebServer::UpdateStatus(const ConnectionStatus& status)
 {
 	if (!_isInit && status.IsJustConnected()) //new connection, only once
 	{

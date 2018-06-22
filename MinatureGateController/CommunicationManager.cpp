@@ -19,7 +19,7 @@ void CommunicationManager::OnCommand(const String& command) const
 
 void CommunicationManager::HandleCommunication()
 {
-	CommunicationDirection communicationDirection = digitalRead(CommunicationLineDirection) ? 
+    const CommunicationDirection communicationDirection = digitalRead(CommunicationLineDirection) ? 
 		CommunicationDirection::SlaveToMaster : CommunicationDirection::MasterToSlave;
 
 	if (communicationDirection == CommunicationDirection::MasterToSlave)
@@ -46,7 +46,7 @@ void CommunicationManager::ExecuteCommand()
 	commandBuilder |= digitalRead(CommunicationLine1) << 1;
 	commandBuilder |= digitalRead(CommunicationLine2) << 2;
 
-	Command command = static_cast<Command>(commandBuilder);
+    const auto command = static_cast<Command>(commandBuilder);
 	if (command == _lastCommand)
 		return; //noting to do
 
@@ -76,7 +76,7 @@ void CommunicationManager::ExecuteCommand()
 
 void CommunicationManager::SendStatus() const
 {
-	auto statusCode = static_cast<unsigned char>(_gateStatus);
+    const auto statusCode = static_cast<unsigned char>(_gateStatus);
 	if (statusCode != _previousSentStatusCode)
 	{
 		Serial.print("Sending status code:");

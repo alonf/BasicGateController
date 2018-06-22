@@ -2,6 +2,7 @@
 
 #ifndef _CONFIGURATION_h
 #define _CONFIGURATION_h
+#include <Arduino.h>
 
 //Wifi Configuration
 static const char *SSID = "AlonIoT"; //The default configuration access point ssid

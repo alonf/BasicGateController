@@ -1,9 +1,10 @@
 #include "GateManager.h"
-#include <Wire.h>
+#include <utility>
 
 using namespace std;
 
-GateManager::GateManager(function<void(const String &)> gateStatusCallback) : _gateStatusCallback(gateStatusCallback)
+GateManager::GateManager(function<void(const String &)> gateStatusCallback) : 
+    _gateStatusCallback(std::move(gateStatusCallback))
 {
 	Serial.println("Gate Manager has started");
 }
@@ -68,7 +69,7 @@ void GateManager::RecieveStatus()
 	statusBuilder |= digitalRead(CommunicationLine1) << 1;
 	statusBuilder |= digitalRead(CommunicationLine2) << 2;
 
-	GateStatus status = static_cast<GateStatus>(statusBuilder);
+    auto status = static_cast<GateStatus>(statusBuilder);
 	String statusMsg;
 	switch (status)
 	{
@@ -115,7 +116,7 @@ void GateManager::RecieveStatus()
 
 void GateManager::Loop()
 {
-	auto now = millis();
+    const auto now = millis();
 	if (now - _lastStatusCheck > StatusPollingInterval)
 	{
 		RecieveStatus();
@@ -126,7 +127,7 @@ void GateManager::Loop()
 void GateManager::Send(Command command)
 {
 	Serial.printf("Sending command code %d\n", command);
-	auto commandCode = static_cast<unsigned char>(command);
+    const auto commandCode = static_cast<unsigned char>(command);
 	SetCommunicationDirection(CommunicationDirection::MasterToSlave);
 	digitalWrite(CommunicationLine0, commandCode & 0b001 ? HIGH : LOW);
 	digitalWrite(CommunicationLine1, commandCode & 0b010 ? HIGH : LOW);

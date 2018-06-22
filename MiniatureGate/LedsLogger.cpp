@@ -1,6 +1,6 @@
 
 #include "LedsLogger.h"
-
+#include <Arduino.h>
 LedsLogger::Led::Led(int ledPin): _ledPin(ledPin), _delayBeforeStart(0), _currentBlinkingIpDigit(2), _bBlinkingIpAddress(false), _currentBlinkingIpOctec(0)
 {
 	pinMode(ledPin, OUTPUT);
@@ -62,7 +62,7 @@ void LedsLogger::Led::BlinkNextIpDigit()
 		return;
 	}
 
-	auto digit = GetDigit(_ipAddress[_currentBlinkingIpOctec], _currentBlinkingIpDigit);
+    const auto digit = GetDigit(_ipAddress[_currentBlinkingIpOctec], _currentBlinkingIpDigit);
 	//Serial.printf("Blinking IP Address, octec #%d, digit #%d, digit: %d\n", _currentBlinkingIpOctec, _currentBlinkingIpDigit, digit);
 	
 	if (digit == 0)
@@ -73,16 +73,15 @@ void LedsLogger::Led::BlinkNextIpDigit()
 	{
 		DoBlink(digit, 500, 1000 + delayBetweenOctec);
 	}
-	delayBetweenOctec = 0;
-	--_currentBlinkingIpDigit;
+    --_currentBlinkingIpDigit;
 }
 
-int LedsLogger::Led::GetDigit(int from, int index)
+ int LedsLogger::Led::GetDigit(int from, int index)
 {
-	return (from / static_cast<int>(pow(10.0, index))) % 10;
+	return from / static_cast<int>(pow(10.0, index)) % 10;
 }
 
-void LedsLogger::Led::DoBlink(int times, int delay, int delayBeforeStart /*= 0 */)
+void LedsLogger::Led::DoBlink(unsigned int times, unsigned int delay, unsigned int delayBeforeStart /*= 0 */)
 {
 	digitalWrite(_ledPin, LOW);
 	_delayBeforeStart = delayBeforeStart;
@@ -91,7 +90,7 @@ void LedsLogger::Led::DoBlink(int times, int delay, int delayBeforeStart /*= 0 *
 	_startTime = millis();
 }
 
-void LedsLogger::Led::Blink(int times, int delay, int delayBeforeStart /*= 0 */)
+void LedsLogger::Led::Blink(unsigned int times, unsigned int delay, unsigned int delayBeforeStart /*= 0 */)
 {
 	if (_bBlinkingIpAddress) //block other blink operations
 		return;

@@ -1,15 +1,14 @@
-#include <stdlib.h>
-#include <stdint.h>
-#include <Arduino.h>
 #include "AzureIoTHub.h"
 #include "AzureIoTHubManager.h"
+#include "AzureIoTHubHttpClient.h"
 #include "azure_c_shared_utility\platform.h"
-
-char  const *__ctype_ptr__ = 0;
+#include <Arduino.h>
+#include <cstdlib>
+#include <cstdint>
 
 void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCallback)
 {
-	int messageTrackingId = reinterpret_cast<intptr_t>(userContextCallback);
+    const auto messageTrackingId = reinterpret_cast<intptr_t>(userContextCallback);
 
 	printf_P("Message Id: %d Received.\r\n", messageTrackingId);
 
@@ -20,9 +19,9 @@ void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCal
 static IOTHUBMESSAGE_DISPOSITION_RESULT IoTHubMessage(IOTHUB_MESSAGE_HANDLE message, void* userContextCallback)
 {
 	printf_P("IoTHubMessage\n");
-	IOTHUBMESSAGE_DISPOSITION_RESULT result;
 	const unsigned char* buffer;
-	size_t size;
+	std::size_t size;
+
 	if (IoTHubMessage_GetByteArray(message, &buffer, &size) != IOTHUB_MESSAGE_OK)
 	{
 		printf_P("unable to IoTHubMessage_GetByteArray\r\n");
@@ -114,7 +113,7 @@ extern "C" bool AzureIoTHubSendMessage(const char *deviceId, const char *status)
 	return result;
 }
 
-extern "C" void AzureIoTHubLoop(void)
+extern "C" void AzureIoTHubLoop()
 {
 	static unsigned int t = 0;
 	if (++t % 100000 == 0)

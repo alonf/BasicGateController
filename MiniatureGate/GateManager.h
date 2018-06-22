@@ -2,11 +2,12 @@
 
 #ifndef _RELAYMANAGER_h
 #define _RELAYMANAGER_h
-#include "arduino.h"
+
 #include <functional>
 #include "Singleton.h"
 #include "ArduinoLoopManager.h"
 #include "Configuration.h"
+#include <Arduino.h>
 
 enum class CommunicationDirection : unsigned char
 {

@@ -23,7 +23,7 @@ ConfigurationManager::ConfigurationManager()
 	}
 }
 
-void ConfigurationManager::FacrotyReset()
+void ConfigurationManager::FacrotyReset() const
 {
 	ClearMagicNumber();
 	EEPROM.commit();
@@ -37,29 +37,29 @@ void ConfigurationManager::FlashEEProm()
 
 bool ConfigurationManager::CheckMagicNumber() const
 {
-	for (int i = 0; i < sizeof(_magicNumber); ++i)
+	for (unsigned int i = 0; i < sizeof(_magicNumber); ++i)
 		if (EEPROM.read(i) != _magicNumber[i])
 			return false;
 	return true;
 }
 
-void ConfigurationManager::WriteMagicNumber()
+void ConfigurationManager::WriteMagicNumber() const
 {
-	for (int i = 0; i < sizeof(_magicNumber); ++i)
+	for (unsigned int i = 0; i < sizeof(_magicNumber); ++i)
 		EEPROM.write(i, _magicNumber[i]);
 }
 
-void ConfigurationManager::ClearMagicNumber() //used to reset password
+void ConfigurationManager::ClearMagicNumber() const //used to reset password
 {
-	for (int i = 0; i < sizeof(_magicNumber); ++i)
+	for (unsigned int i = 0; i < sizeof(_magicNumber); ++i)
 		EEPROM.write(i, 0);
 }
 
 void ConfigurationManager::ReadEEPROMInfo()
 {
-	for (int i = 0; i < sizeof(_eepromInformationBlock); ++i)
+	for (unsigned int i = 0; i < sizeof(_eepromInformationBlock); ++i)
 	{
-		char c = EEPROM.read(i);
+	    const char c = EEPROM.read(i);
 		*(reinterpret_cast<char *>(&_eepromInformationBlock) + i) = c;
 	}
 }
@@ -68,7 +68,7 @@ void ConfigurationManager::FlashEEPROMInfo()
 {
 	DumpEEPromInfo();
 	WriteMagicNumber();
-	for (int i = sizeof(_eepromInformationBlock._magicNumber); i < sizeof(_eepromInformationBlock); ++i)
+	for (unsigned int i = sizeof(_eepromInformationBlock._magicNumber); i < sizeof(_eepromInformationBlock); ++i)
 		EEPROM.write(i, *(reinterpret_cast<char *>(&_eepromInformationBlock) + i));
 	EEPROM.commit();
 }
@@ -115,7 +115,7 @@ void ConfigurationManager::SetWebServerMode()
 	_eepromInformationBlock.bUseAzureIoTHub = false;
 }
 
-String ConfigurationManager::GetAzureIoTConnectionString()
+String ConfigurationManager::GetAzureIoTConnectionString() const
 {
 	return String(_eepromInformationBlock.AzureIoTHubConnectionString);
 }
@@ -125,7 +125,7 @@ String ConfigurationManager::GetIoTHubDeviceId() const
 	return String(_eepromInformationBlock.IoTHubDeviceId);
 }
 
-void ConfigurationManager::SetButonPressTimesMilliSeconds(unsigned longPeriod, unsigned veryLongPeriod)
+void ConfigurationManager::SetButonPressTimesMilliSeconds(unsigned int longPeriod, unsigned int veryLongPeriod)
 {
 	_eepromInformationBlock.milliSecondsButonLongTimePeriod = longPeriod;
 	_eepromInformationBlock.milliSecondsButonVeryLongTimePeriod = veryLongPeriod;

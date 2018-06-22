@@ -2,7 +2,7 @@
 
 #ifndef _RELAYMANAGER_h
 #define _RELAYMANAGER_h
-#include "arduino.h"
+#include <Arduino.h>
 #include "Configuration.h"
 #include <Stepper.h>
 #include "CommunicationManager.h"
@@ -28,12 +28,16 @@ class GateManager final
 	public:
 		explicit GateMovementState(GateManager *pGateManager) : _pGateManager(pGateManager) {}
 		virtual void Loop() {}
-		virtual ~GateMovementState() {}
 		virtual GateState State() const = 0;
 		virtual void Initialize() {}
 		virtual GateState OnButtonPressed(GateState previousMovement) = 0;
 		virtual GateStatus StatusReportCode() const = 0;
-		GateManager *_pGateManager;
+		GateManager *_pGateManager{};
+
+        GateMovementState() = default;
+        GateMovementState(const GateMovementState&) = default;
+        GateMovementState& operator=(const GateMovementState&) = default;
+        virtual ~GateMovementState() = default;
 	};
 
 	template<GateState currentState>
@@ -140,7 +144,7 @@ void GateManager::GateMovementOpenigOrClosing<Direction, CurrentState, EndState>
 template <int Direction, GateState CurrentState, GateState EndState>
 void GateManager::GateMovementOpenigOrClosing<Direction, CurrentState, EndState>::Loop()
 {
-	auto currentTick = millis();
+    const auto currentTick = millis();
 	//handle flashing led blinks
 	if (currentTick - _flashingLedTime > flashingLedPeriod)
 	{
@@ -148,8 +152,8 @@ void GateManager::GateMovementOpenigOrClosing<Direction, CurrentState, EndState>
 		digitalWrite(flashingLED, _flashingLedState);
 		_flashingLedTime = currentTick;
 	}
-	
-	GateState currentState = _pGateManager->ReadState();
+
+    const GateState currentState = _pGateManager->ReadState();
 	if (currentState == EndState) //opened or closed
 	{
 		ChangeState(currentState);

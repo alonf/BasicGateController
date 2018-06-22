@@ -1,5 +1,6 @@
 
 #include "WiFiManager.h"
+#include <Esp.h>
 
 using namespace std;
 
@@ -30,7 +31,7 @@ std::list<AccessPointInfo>  ConnectionStatus::_accessPointList;
 
 void WiFiManager::PopulateWiFiNetworks()
 {
-	int n = WiFi.scanNetworks();
+    const int n = WiFi.scanNetworks();
 	Serial.println("scan done");
 	if (n == 0)
 		Serial.println("no networks found");
@@ -41,6 +42,13 @@ void WiFiManager::PopulateWiFiNetworks()
 		for (int i = 0; i < n; ++i)
 		{
 			ConnectionStatus::AddAccessPointInfo(AccessPointInfo{ String(WiFi.ESP8266WiFiScanClass::SSID(i).c_str()), WiFi.ESP8266WiFiScanClass::RSSI(i) ,WiFi.ESP8266WiFiScanClass::encryptionType(i) == ENC_TYPE_NONE });
+            auto freeHeapMemory = ESP.getFreeHeap();
+            Serial.printf("After adding network, free heap memory: %d\n", freeHeapMemory);
+            if (freeHeapMemory < 23500) //about 10 wifi networks
+            {
+                Serial.printf("Heap memory too low, stop adding network. %d add out of %d\n", i , n);
+                break;
+            }
 		}
 	}
 }
@@ -62,7 +70,7 @@ WiFiManager::WiFiManager(const String &ssid, const String &password, bool isAcce
 		WiFi.softAP(ssid.c_str(), password.c_str(), 6);
 		Serial.println("softap up and running");
 
-		IPAddress myIP = WiFi.softAPIP();
+	    const IPAddress myIP = WiFi.softAPIP();
 		Serial.print("AP IP address: ");
 		Serial.println(myIP);
 		_accessPointMode = true;
@@ -75,14 +83,14 @@ WiFiManager::WiFiManager(const String &ssid, const String &password, bool isAcce
 	}
 }
 
-void  WiFiManager::RegisterClient(wifiNotificarionFunc_t notification)
+void  WiFiManager::RegisterClient(const wifiNotificarionFunc_t& notification)
 {
 	_subscribers.push_back(notification);
 }
 
-void  WiFiManager::NotifyAll(ConnectionStatus status) const
+void  WiFiManager::NotifyAll(const ConnectionStatus& status) const
 {
-	for (auto subscriber : _subscribers)
+	for (const auto& subscriber : _subscribers)
 	{
 		subscriber(status);
 	}
@@ -108,12 +116,12 @@ void WiFiManager::HandleAccessPointModeStatus()
 		return;
 	}
 
-	auto currentStatus = WiFi.softAPgetStationNum(); //the number of connected client
+    const auto currentStatus = WiFi.softAPgetStationNum(); //the number of connected client
 	if (_lastConnectionStatus == currentStatus) //no change
 		return;
 
-	bool justConnected = _lastConnectionStatus == 0 &&  currentStatus > 0; //more than zero
-	bool justDissconnected = _lastConnectionStatus > 0 && currentStatus == 0; //zero
+	const bool justConnected = _lastConnectionStatus == 0 &&  currentStatus > 0; //more than zero
+	const bool justDissconnected = _lastConnectionStatus > 0 && currentStatus == 0; //zero
 
 	_lastConnectionStatus = currentStatus;
 	NotifyAll(ConnectionStatus(WiFi.status(), WiFi.localIP(), justConnected, justDissconnected, true));
@@ -126,13 +134,13 @@ void WiFiManager::UpdateStatus()
 		HandleAccessPointModeStatus();
 		return;
 	}//else
-		
-	auto currentStatus = WiFi.status();
+
+    const auto currentStatus = WiFi.status();
 	if (_lastConnectionStatus == currentStatus) //no change
 		return;
 
-	bool justConnected = _lastConnectionStatus != WL_CONNECTED &&  currentStatus == WL_CONNECTED;
-	bool justDissconnected = _lastConnectionStatus == WL_CONNECTED && currentStatus != WL_CONNECTED;
+	const bool justConnected = _lastConnectionStatus != WL_CONNECTED &&  currentStatus == WL_CONNECTED;
+    const bool justDissconnected = _lastConnectionStatus == WL_CONNECTED && currentStatus != WL_CONNECTED;
 	
 	_lastConnectionStatus = currentStatus;
 	NotifyAll(ConnectionStatus(WiFi.status(), WiFi.localIP(), justConnected, justDissconnected));

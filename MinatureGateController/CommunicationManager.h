@@ -14,7 +14,13 @@ class ICommand
 {
 public:
 	virtual void OnCommand(const String &command) = 0;
-	virtual ~ICommand() = default;
+
+    ICommand() = default;
+    ICommand(const ICommand&) = delete;
+    ICommand& operator=(const ICommand&) = delete;
+    ICommand(const ICommand&&) = delete;
+    ICommand& operator=(const ICommand&&) = delete;
+    virtual ~ICommand() = default;
 };
 typedef ICommand* ICommandP_t;
 

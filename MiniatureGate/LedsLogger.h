@@ -1,11 +1,10 @@
 #ifndef _LEDSLOGGER_h
 #define _LEDSLOGGER_h
-#include "arduino.h"
+
 #include <memory>
 #include "Singleton.h"
 #include "ArduinoLoopManager.h"
 #include <IPAddress.h>
-#include <queue>
 
 
 class LedsLogger : public Singleton<LedsLogger>, public IProcessor
@@ -16,24 +15,24 @@ class LedsLogger : public Singleton<LedsLogger>, public IProcessor
 	 {
 	 private:
 		 const int _ledPin;
-		 int _ledValue = 0;
-		 int _lastSetVLedValue = 0;
-		 int _times = 0;
-		 int _blinkDelay = 0;
+         unsigned int _ledValue = 0;
+         unsigned int _lastSetVLedValue = 0;
+         unsigned int _times = 0;
+         unsigned int _blinkDelay = 0;
 		 unsigned long _startTime = 0;
-		 int _delayBeforeStart;
-		 int _currentBlinkingIpDigit;
+		 unsigned int _delayBeforeStart;
+         int _currentBlinkingIpDigit;
 		 IPAddress _ipAddress;
 		 bool _bBlinkingIpAddress;
-		 int _currentBlinkingIpOctec;
+         unsigned int _currentBlinkingIpOctec;
 		 static int GetDigit(int from, int index);
-		 void DoBlink(int times, int delay, int delayBeforeStart = 0);
+		 void DoBlink(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0);
 		 void BlinkNextIpDigit();
 	 public:
 		 Led(int ledPin);
 		 void Update();
 		 void BlinkIpAddress(const IPAddress& ipAddress);
-		 void Blink(int times, int delay, int delayBeforeStart = 0);
+		 void Blink(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0);
 		 void Set(int value);
 	 };
 
@@ -43,8 +42,8 @@ class LedsLogger : public Singleton<LedsLogger>, public IProcessor
 	 LedsLogger(int redLedPin, int greenLedPin) : _red(redLedPin), _green(greenLedPin) {}
 
  public:
-	 void BlinkRed(int times, int delay, int delayBeforeStart = 0) { _red.Blink(times, delay, delayBeforeStart); }
-	 void BlinkGreen(int times, int delay, int delayBeforeStart = 0) { _green.Blink(times, delay, delayBeforeStart); }
+	 void BlinkRed(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0) { _red.Blink(times, delay, delayBeforeStart); }
+	 void BlinkGreen(unsigned int times, unsigned int delay, unsigned int delayBeforeStart = 0) { _green.Blink(times, delay, delayBeforeStart); }
 	 void SetRed(int value) { _red.Set(value); }
 	 void SetGreen(int value) { _green.Set(value); }
 	 

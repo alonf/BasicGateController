@@ -1,4 +1,4 @@
-﻿#include <String>
+﻿
 #ifndef _WEBSETTINGSTEMPLATE_h
 #define _WEBSETTINGSTEMPLATE_h
 

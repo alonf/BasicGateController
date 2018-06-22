@@ -3,13 +3,7 @@
 #ifndef _AZUREIOTHUBMANAGER_h
 #define _AZUREIOTHUBMANAGER_h
 
-#include "Arduino.h"
-#include "AzureIoTHubHttpClient.h"
-#include "AzureIoTHub.h"
 #include <functional>
-#include <stdint.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include "Logger.h"
 #include "Singleton.h"
 #include "ArduinoLoopManager.h"
@@ -28,14 +22,14 @@ private:
 	bool _IsInitTime = false;
 	int _loopStartTime = millis();
 	const char* _azureIoTHubDeviceConnectionString;
-	void UpdateStatus(ConnectionStatus status);
+	void UpdateStatus(const ConnectionStatus& status);
 	bool CheckTimeInitiated();
 	bool CheckIoTHubClientInitiated();
-	AzureIoTHubManager(WiFiManagerPtr_t wifiManager, LoggerPtr_t logger, const char* connectionString);
+	AzureIoTHubManager(const WiFiManagerPtr_t& wifiManager, LoggerPtr_t logger, const char* connectionString);
 public:
 	void Register(WebNotificationPtr_t subscriber) { _pubsub.Register(subscriber); }
 	void Loop() override;
-	void UpdateGateStatus(const char *deviceId, String status) const;
+	void UpdateGateStatus(const char *deviceId, const String& status) const;
 	void HandleCommand(const String& commandName) const;
 
 };

@@ -2,7 +2,6 @@
 
 #ifndef _SINGLETON_h
 #define _SINGLETON_h
-#include "arduino.h"
 #include <memory>
 
 template<typename T>

@@ -1,8 +1,8 @@
 #include "GateManager.h"
 
-GateManager::GateManager() : _state(nullptr)
+GateManager::GateManager() : _state(nullptr), _states{}
 {
-	Serial.println("Gate Manager has started");
+    Serial.println("Gate Manager has started");
 }
 
 
@@ -54,8 +54,8 @@ void GateManager::ChangeState(GateMovementState *pState)
 	
 	Serial.write("Gate change state. Old state: ");
 	Serial.println(_state ? _statuses[static_cast<unsigned char>(_state->State())].c_str() : "Initizlizing");
-	_state = pState;	
-	auto newStatus = _statuses[static_cast<unsigned char>(_state->State())].c_str();
+	_state = pState;
+    const auto newStatus = _statuses[static_cast<unsigned char>(_state->State())].c_str();
 	Serial.write("New state: ");
 	Serial.println(newStatus);
 	
@@ -66,8 +66,8 @@ void GateManager::ChangeState(GateMovementState *pState)
 
 GateState GateManager::ReadState()
 {
-	int opennedLimitSwitchValue = digitalRead(limitSwitcheOpened);
-	int closedLimitSwitchValue = digitalRead(limitSwitcheClosed);
+    const int opennedLimitSwitchValue = digitalRead(limitSwitcheOpened);
+    const int closedLimitSwitchValue = digitalRead(limitSwitcheClosed);
 
 	/*Serial.write("limitSwitcheOpened: ");
 	Serial.println(opennedLimitSwitchValue);
@@ -137,7 +137,7 @@ void GateManager::OnCommand(const String& commandName)
 
 void GateManager::OnButtonPressed()
 {
-	auto newState = _state->OnButtonPressed(_previousState);
+    const auto newState = _state->OnButtonPressed(_previousState);
 	if (_state->State() == GateState::OPENNING || _state->State() == GateState::CLOSING)
 		_previousState = _state->State(); //save previous movement state in case the gate stopes in the middle and we need to change direction
 	ChangeState(SelectState(newState));

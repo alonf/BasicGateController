@@ -35,6 +35,9 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
+# VisualMicro
+__vm/
+
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/

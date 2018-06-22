@@ -3,12 +3,12 @@
 #ifndef _LOGGER_h
 #define _LOGGER_h
 
-#include "arduino.h"
 #include "LedsLogger.h"
 #include "WebServer.h"
 #include <memory>
 #include "Singleton.h"
 #include "ArduinoLoopManager.h"
+#include <Arduino.h>
 
 class Logger : public Singleton<Logger>, public IProcessor
 {

@@ -3,17 +3,18 @@
 // 
 
 #include "PushButtonManager.h"
+#include <utility>
 #include "Configuration.h"
 
 PushButtonManager::PushButtonManager(int pin, IPushButtonActionsPtr_t pushButtonActions)
-	: _pin(pin), _pushButtonActions(pushButtonActions)
+	: _pin(pin), _pushButtonActions(std::move(pushButtonActions))
 {
 	pinMode(pin, INPUT);
 }
 
 void PushButtonManager::Loop()
 {
-	auto currentState = digitalRead(_pin);
+    const auto currentState = digitalRead(_pin);
 	if (currentState == ButtonPressed && _previousButtonState == ButtonReleased) //Trigger
 	{
 		_pressStartTime = millis();
@@ -22,7 +23,7 @@ void PushButtonManager::Loop()
 	//handle detection callbacks
 	if (currentState == ButtonPressed && _previousButtonState == ButtonPressed) //continue press
 	{
-		auto length = millis() - _pressStartTime;
+	    const auto length = millis() - _pressStartTime;
 		if (!_bLongDetection && _pushButtonActions->GetLongPressPeriod() < length && length < _pushButtonActions->GetVeryLongPressPeriod())
 		{
 			_bLongDetection = true;
@@ -38,7 +39,7 @@ void PushButtonManager::Loop()
 	//Handle button press
 	if (currentState == ButtonReleased && _previousButtonState == ButtonPressed && _pressStartTime != 0 && millis() - _pressStartTime > 100) //long enough
 	{
-		auto length = millis() - _pressStartTime;
+	    const auto length = millis() - _pressStartTime;
 		if (length < _pushButtonActions->GetLongPressPeriod()) //less then 5 seconds, regular press
 		{
 			_pushButtonActions->OnPress(); //Notify change
