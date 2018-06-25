@@ -44,7 +44,7 @@ void WiFiManager::PopulateWiFiNetworks()
 			ConnectionStatus::AddAccessPointInfo(AccessPointInfo{ String(WiFi.ESP8266WiFiScanClass::SSID(i).c_str()), WiFi.ESP8266WiFiScanClass::RSSI(i) ,WiFi.ESP8266WiFiScanClass::encryptionType(i) == ENC_TYPE_NONE });
             auto freeHeapMemory = ESP.getFreeHeap();
             Serial.printf("After adding network, free heap memory: %d\n", freeHeapMemory);
-            if (freeHeapMemory < 23500) //about 10 wifi networks
+            if (freeHeapMemory < 20000) //about 10 wifi networks
             {
                 Serial.printf("Heap memory too low, stop adding network. %d add out of %d\n", i , n);
                 break;
@@ -53,9 +53,11 @@ void WiFiManager::PopulateWiFiNetworks()
 	}
 }
 
-WiFiManager::WiFiManager(const String &ssid, const String &password, bool isAccessPointMode)
+WiFiManager::WiFiManager(const String &ssid, const String &password, bool isAccessPointMode, bool isWebMode)
 {
-	PopulateWiFiNetworks();
+	if (isWebMode)
+		PopulateWiFiNetworks();
+
 	if (isAccessPointMode)
 	{
 		WiFi.mode(WIFI_AP);
