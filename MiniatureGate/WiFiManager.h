@@ -83,7 +83,7 @@ private:
 	void UpdateStatus();
 	void NotifyAll(const ConnectionStatus& status) const;
 	static void PopulateWiFiNetworks();
-	WiFiManager(const String &ssid, const String &password, bool isAccessPointMode);
+	WiFiManager(const String &ssid, const String &password, bool isAccessPointMode, bool isWebMode);
 
  public:
 	const char *GetName() const override { return "WiFiManager"; }

@@ -174,14 +174,14 @@ void setup()
 	auto storedPassword = configurationManger->GetAccessPointPassword();
 
 	logger = Logger::Create(redLed, greenLed, 115200);
-
+	bool isWebServerMode = !configurationManger->ShouldUseAzureIoTHub();
 	if (!configurationManger->IsAccessPointMode())
 	{
 		Serial.println("Try to connect to WiFi Access Point");
 		Serial.print("Stored SSID is:");
 		Serial.println(storedSSID.c_str());
 
-		wifiManager = WiFiManager::Create(storedSSID, storedPassword, false);
+		wifiManager = WiFiManager::Create(storedSSID, storedPassword, false, isWebServerMode);
 	}
 	else //Set access point mode
 	{
@@ -189,18 +189,18 @@ void setup()
 		Serial.print("Stored SSID is:");
 		Serial.println(storedSSID.c_str());
 
-		wifiManager = WiFiManager::Create(SSID, password, true);
+		wifiManager = WiFiManager::Create(SSID, password, true, isWebServerMode);
 	}
 
 	wifiManager->RegisterClient([](const ConnectionStatus &status) { logger->OnWiFiStatusChanged(status); });
 
-	if (configurationManger->ShouldUseAzureIoTHub())
+	if (isWebServerMode)
 	{
-		SetupAzureIoTHubManager();
+		SetupWebServer();
 	}
 	else
 	{
-		SetupWebServer();
+		SetupAzureIoTHubManager();
 	}
 
 	gateManager = GateManager::Create([=](const String &gateStatus)
