@@ -1,8 +1,11 @@
+#include <Arduino.h>
+#undef min
+#undef max
 #include "AzureIoTHub.h"
 #include "AzureIoTHubManager.h"
 #include "AzureIoTHubHttpClient.h"
 #include "azure_c_shared_utility\platform.h"
-#include <Arduino.h>
+
 #include <cstdlib>
 #include <cstdint>
 
@@ -12,7 +15,7 @@ void sendCallback(IOTHUB_CLIENT_CONFIRMATION_RESULT result, void* userContextCal
 
 	printf_P("Message Id: %d Received.\r\n", messageTrackingId);
 
-	printf_P("Result Call Back Called! Result is: %s \r\n", ENUM_TO_STRING(IOTHUB_CLIENT_CONFIRMATION_RESULT, result));
+	printf_P((String("Result Call Back Called! Result is: ") + ENUM_TO_STRING(IOTHUB_CLIENT_CONFIRMATION_RESULT, result) + "\n").c_str());
 }
 
 

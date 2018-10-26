@@ -74,26 +74,26 @@ void GateManager::RecieveStatus()
 	switch (status)
 	{
 	case GateStatus::OpenedMessage:
-		statusMsg = "Gate Open";
+		statusMsg = "The gate is open";
 		break;
 	case GateStatus::OpeningMessage:
-		statusMsg = "Gate Opening";
+		statusMsg = "Opening the gate";
 		break;
 	case GateStatus::StopedMessage:
-		statusMsg = "Gate Movement Stopped";
+		statusMsg = "Gate movement stopped";
 		break;
 
 
 	case GateStatus::ClosedMessage:
-		statusMsg = "Gate Close";
+		statusMsg = "The gate is closed";
 		break;
 
 	case GateStatus::ClosingMessage:
-		statusMsg = "Gate Closing";
+		statusMsg = "Closing the gate ";
 		break;
 
 	case GateStatus::UnknownMessage:
-		statusMsg = "Gate Status Unknown";
+		statusMsg = "The gate status is unknown";
 		break;
 
 	case GateStatus::NoStatus:

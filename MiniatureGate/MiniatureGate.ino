@@ -1,9 +1,11 @@
+#include <Arduino.h>
+#undef min
+#undef max
 #include <WiFiClient.h>
 #include <AzureIoTHub.h>
 #include <AzureIoTUtility.h>
 #include <AzureIoTProtocol_HTTP.h>
 #include <AzureIoTProtocol_MQTT.h>
-
 #include <dummy.h>
 #include <EEPROM.h>
 #include "ConfigurationManager.h"
@@ -18,7 +20,7 @@
 #include "Configuration.h"
 #include "GateManager.h"
 #include "PushButtonManager.h"
-#include <Arduino.h>
+
 
 using namespace std;
 

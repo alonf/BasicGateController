@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GateController.SettingsPage">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Row 0 -->
+            <Label Text="IoT Hub Connection String:" Grid.Row="0" Grid.Column="0" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding IoTHubConnectionString}"/>
+            <!-- Row 1 -->
+            <Label Text="Device Id:" Grid.Row="1" Grid.Column="0" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding DeviceId}" />
+            <!-- Row 2 -->
+            <Label Text="Service Bus Connection String:" Grid.Row="2" Grid.Column="0" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding ServiceBusConnectionString}" />
+            <!-- Row 3 -->
+            <Label Text="Queue Name:" Grid.Row="3" Grid.Column="0" FontSize="Large" HorizontalTextAlignment="Start" VerticalTextAlignment="Center" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding QueueName}" />
+            <!-- Row 4 -->
+            <!-- Row 5 -->
+            <Button Grid.Row="5" Grid.Column="0" Text="OK" FontSize="Large" Clicked="OnOk"/>
+            <Button Grid.Row="5" Grid.Column="1" Text="Cancel" FontSize="Large" Clicked="OnCancel"/>
+
+        </Grid>
+</ContentPage>
