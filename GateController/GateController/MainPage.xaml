@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:GateController"
+             x:Class="GateController.MainPage">
+    <ContentPage.Resources>
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="CenterAndExpand" />
+            <Setter Property="FontSize" Value="28" />
+        </Style>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <StackLayout Orientation="Vertical">
+                <Button Text="Open Gate"
+                        Style="{StaticResource buttonStyle}"
+                        Clicked="OnOpenModelGate"/>
+                <Button Text="Close Gate"
+                        Style="{StaticResource buttonStyle}"
+                        Clicked="OnCloseModelGate"/>
+                <Button Text="Stop Gate"
+                        Style="{StaticResource buttonStyle}"
+                        Clicked="OnStopModelGate"/>
+                <Button Text="Go web"
+                        Style="{StaticResource buttonStyle}"
+                        BackgroundColor="Red"
+                        Clicked="OnSwitchToWebModelGate"/>
+                <Button Text="Settings"
+                        Style="{StaticResource buttonStyle}"
+                        BackgroundColor="Blue"
+                        Clicked="OnSettings"/>
+            </StackLayout>
+        </Frame>
+        <Frame HasShadow="True" OutlineColor="Black">
+            <ListView x:Name="GateMessagesView">
+
+            </ListView>
+        </Frame>
+    </StackLayout>
+
+</ContentPage>

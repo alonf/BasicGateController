@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="GateController.SettingsPage">
+    <ContentPage.Resources>
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="HorizontalOptions" Value="Start" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+        <Style x:Key="buttonStyle" TargetType="Button">
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="FontSize" Value="18" />
+        </Style>
+    </ContentPage.Resources>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="80" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!-- Row 0 -->
+        <Label Text="IoT Hub Connection String:" Grid.Row="0" Grid.Column="0" Style="{StaticResource labelStyle}" />
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding IoTHubConnectionString}"/>
+            <!-- Row 1 -->
+        <Label Text="Device Id:" Grid.Row="1" Grid.Column="0" Style="{StaticResource labelStyle}" />
+            <Entry Grid.Row="1" Grid.Column="1" Text="{Binding DeviceId}" />
+            <!-- Row 2 -->
+        <Label Text="Service Bus Connection String:" Grid.Row="2" Grid.Column="0" Style="{StaticResource labelStyle}" />
+            <Entry Grid.Row="2" Grid.Column="1" Text="{Binding ServiceBusConnectionString}" />
+            <!-- Row 3 -->
+        <Label Text="Queue Name:" Grid.Row="3" Grid.Column="0" Style="{StaticResource labelStyle}" />
+            <Entry Grid.Row="3" Grid.Column="1" Text="{Binding QueueName}" />
+            <!-- Row 4 -->
+            <!-- Row 5 -->
+        <Button Grid.Row="5" Grid.Column="0" Text="OK" Style="{StaticResource buttonStyle}" Clicked="OnOk"/>
+        <Button Grid.Row="5" Grid.Column="1" Text="Cancel" Style="{StaticResource buttonStyle}" Clicked="OnCancel"/>
+
+        </Grid>
+</ContentPage>

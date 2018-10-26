@@ -35,6 +35,9 @@ bld/
 *.VisualState.xml
 TestResult.xml
 
+# VisualMicro
+__vm/
+
 # Build Results of an ATL Project
 [Dd]ebugPS/
 [Rr]eleasePS/
@@ -259,3 +262,8 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+
+# VisualMicro
+__vm/
+.vs/
+.UniversalACRemote.vsarduino.h
